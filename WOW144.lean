@@ -2,6 +2,7 @@ import WOW144.Audit
 import WOW144.Arithmetic
 import WOW144.InducedTree
 import WOW144.CycleBase
+import WOW144.CycleAttachment
 
 /-!
 # WOW II Conjecture 144
