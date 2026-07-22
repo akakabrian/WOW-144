@@ -1,9 +1,6 @@
 $ lake build FormalConjectures.WrittenOnTheWallII.GraphConjecture144
 Build completed successfully (8038 jobs).
 $ lake env lean -DwarningAsError=true WOW144/Audit.lean
-WOW144/Audit.lean:3:0: error: This file has no module docstring (`/-! ... -/`). Add one after the imports to document the file.
-
-Note: This linter can be disabled with `set_option linter.style.moduleDocstring false`
 WrittenOnTheWallII.GraphConjecture144.conjecture144.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] [Nontrivial α]
   (G : SimpleGraph α) (h : G.Connected) : ↑G.girth - 1 + ↑(G.ecc G.center) ≤ ↑G.largestInducedTreeSize
 SimpleGraph.largestInducedTreeSize.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
@@ -11,63 +8,22 @@ SimpleGraph.ecc.{u_1} {α : Type u_1} [Fintype α] (G : SimpleGraph α) (S : Set
 SimpleGraph.center.{u_1} {α : Type u_1} (G : SimpleGraph α) : Set α
 SimpleGraph.girth.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
 $ lake env lean -DwarningAsError=true WOW144/Arithmetic.lean
-WOW144/Arithmetic.lean:5:0: error: This file has no module docstring (`/-! ... -/`). Add one after the imports to document the file.
-
-Note: This linter can be disabled with `set_option linter.style.moduleDocstring false`
-WOW144/Arithmetic.lean:11:0: error: automatically included section variable(s) unused in theorem `WOW144.conjecture144_of_nat_bound`:
-  [DecidableEq α]
-  [Nontrivial α]
-consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
-  omit [DecidableEq α] [Nontrivial α] in theorem ...
-
-Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+$ lake env lean -DwarningAsError=true WOW144/InducedTree.lean
+'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
 $ lake --wfail build WOW144
-⚠ [8040/8044] Building WOW144.InducedTree (5.3s)
-trace: .> LEAN_PATH=/home/runner/work/WOW-144/WOW-144/.lake/packages/Cli/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/batteries/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/Qq/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/aesop/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/importGraph/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/plausible/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/mathlib/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/formal_conjectures/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean /home/runner/.elan/toolchains/leanprover--lean4---v4.27.0/bin/lean /home/runner/work/WOW-144/WOW-144/WOW144/InducedTree.lean -o /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/InducedTree.olean -i /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/InducedTree.ilean -c /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/InducedTree.c --setup /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/InducedTree.setup.json --json
-warning: WOW144/InducedTree.lean:5:0: This file has no module docstring (`/-! ... -/`). Add one after the imports to document the file.
-
-Note: This linter can be disabled with `set_option linter.style.moduleDocstring false`
-warning: WOW144/InducedTree.lean:14:0: automatically included section variable(s) unused in theorem `SimpleGraph.finset_card_le_largestInducedTreeSize`:
-  [DecidableEq α]
-consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
-  omit [DecidableEq α] in theorem ...
-
-Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-info: WOW144/InducedTree.lean:25:0: 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
-⚠ [8041/8044] Building WOW144.Audit (5.0s)
-trace: .> LEAN_PATH=/home/runner/work/WOW-144/WOW-144/.lake/packages/Cli/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/batteries/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/Qq/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/aesop/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/importGraph/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/plausible/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/mathlib/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/formal_conjectures/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean /home/runner/.elan/toolchains/leanprover--lean4---v4.27.0/bin/lean /home/runner/work/WOW-144/WOW-144/WOW144/Audit.lean -o /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/Audit.olean -i /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/Audit.ilean -c /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/Audit.c --setup /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/Audit.setup.json --json
-warning: WOW144/Audit.lean:5:0: This file has no module docstring (`/-! ... -/`). Add one after the imports to document the file.
-
-Note: This linter can be disabled with `set_option linter.style.moduleDocstring false`
-info: WOW144/Audit.lean:7:0: WrittenOnTheWallII.GraphConjecture144.conjecture144.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] [Nontrivial α]
+ℹ [8040/8044] Built WOW144.Audit (4.6s)
+info: WOW144/Audit.lean:13:0: WrittenOnTheWallII.GraphConjecture144.conjecture144.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] [Nontrivial α]
   (G : SimpleGraph α) (h : G.Connected) : ↑G.girth - 1 + ↑(G.ecc G.center) ≤ ↑G.largestInducedTreeSize
-info: WOW144/Audit.lean:8:0: SimpleGraph.largestInducedTreeSize.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
-info: WOW144/Audit.lean:9:0: SimpleGraph.ecc.{u_1} {α : Type u_1} [Fintype α] (G : SimpleGraph α) (S : Set α) : ℕ
-info: WOW144/Audit.lean:10:0: SimpleGraph.center.{u_1} {α : Type u_1} (G : SimpleGraph α) : Set α
-info: WOW144/Audit.lean:11:0: SimpleGraph.girth.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
-⚠ [8042/8044] Building WOW144.Arithmetic (5.0s)
-trace: .> LEAN_PATH=/home/runner/work/WOW-144/WOW-144/.lake/packages/Cli/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/batteries/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/Qq/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/aesop/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/importGraph/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/plausible/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/mathlib/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/formal_conjectures/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean /home/runner/.elan/toolchains/leanprover--lean4---v4.27.0/bin/lean /home/runner/work/WOW-144/WOW-144/WOW144/Arithmetic.lean -o /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/Arithmetic.olean -i /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/Arithmetic.ilean -c /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/Arithmetic.c --setup /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/Arithmetic.setup.json --json
-warning: WOW144/Arithmetic.lean:3:0: This file has no module docstring (`/-! ... -/`). Add one after the imports to document the file.
-
-Note: This linter can be disabled with `set_option linter.style.moduleDocstring false`
-warning: WOW144/Arithmetic.lean:11:0: automatically included section variable(s) unused in theorem `WOW144.conjecture144_of_nat_bound`:
-  [DecidableEq α]
-  [Nontrivial α]
-consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
-  omit [DecidableEq α] [Nontrivial α] in theorem ...
-
-Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [8043/8044] Building WOW144 (4.1s)
-trace: .> LEAN_PATH=/home/runner/work/WOW-144/WOW-144/.lake/packages/Cli/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/batteries/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/Qq/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/aesop/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/importGraph/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/plausible/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/mathlib/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/formal_conjectures/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean /home/runner/.elan/toolchains/leanprover--lean4---v4.27.0/bin/lean /home/runner/work/WOW-144/WOW-144/WOW144.lean -o /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144.olean -i /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144.ilean -c /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144.c --setup /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144.setup.json --json
-warning: WOW144.lean:4:0: This file has no module docstring (`/-! ... -/`). Add one after the imports to document the file.
-
-Note: This linter can be disabled with `set_option linter.style.moduleDocstring false`
-Some required targets logged failures:
-- WOW144.InducedTree
-- WOW144.Audit
-- WOW144.Arithmetic
-- WOW144
-error: build failed
+info: WOW144/Audit.lean:14:0: SimpleGraph.largestInducedTreeSize.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
+info: WOW144/Audit.lean:15:0: SimpleGraph.ecc.{u_1} {α : Type u_1} [Fintype α] (G : SimpleGraph α) (S : Set α) : ℕ
+info: WOW144/Audit.lean:16:0: SimpleGraph.center.{u_1} {α : Type u_1} (G : SimpleGraph α) : Set α
+info: WOW144/Audit.lean:17:0: SimpleGraph.girth.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
+✔ [8041/8044] Built WOW144.Arithmetic (6.1s)
+ℹ [8042/8044] Built WOW144.InducedTree (6.1s)
+info: WOW144/InducedTree.lean:32:0: 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [8043/8044] Built WOW144 (4.1s)
+Build completed successfully (8044 jobs).
 $ local sorry/axiom scan
+No prohibited local declarations or placeholders found.
 
 EXIT_STATUS=0
