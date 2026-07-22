@@ -1,0 +1,15 @@
+name = "wow_144"
+version = "0.1.0"
+defaultTargets = ["WOW144"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[require]]
+name = "formal_conjectures"
+git = "https://github.com/google-deepmind/formal-conjectures.git"
+rev = "e923379e609b9d5987011a1d1f06ec22ea25cd20"
+
+[[lean_lib]]
+name = "WOW144"
