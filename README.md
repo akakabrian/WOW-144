@@ -11,7 +11,7 @@ Isolated research and Lean formalization workspace for Written on the Wall II Co
 
 ## Lean
 
-GitHub Actions installs the pinned Lean toolchain, fetches Mathlib caches, and builds the `WOW144` library.
+GitHub Actions installs the pinned Lean toolchain, fetches Mathlib caches, and builds the `WOW144` library. Each completed run records its exact exit codes and log tail in `CI_RESULT.md`.
 
 Current formal artifacts:
 
