@@ -1,5 +1,11 @@
 import FormalConjectures.WrittenOnTheWallII.GraphConjecture144
 
+/-!
+# Conjecture 144 source audit
+
+Checks the exact upstream theorem type and the graph invariants appearing in it.
+-/
+
 namespace WOW144
 
 open Classical SimpleGraph
