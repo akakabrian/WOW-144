@@ -1,0 +1,25 @@
+{
+  "method": "NetworkX graph atlas; exact exhaustive vertex-subset search",
+  "networkx_version": "3.6.1",
+  "connected_graph_count": 995,
+  "cyclic_graph_count": 971,
+  "counterexample_count": 0,
+  "tight_count": 52,
+  "minimum_slack": 0,
+  "center_depth_exceeds_diameter_minus_radius_count": 6,
+  "center_depth_exceeds_diameter_minus_radius": [
+    {"graph6":"Fh_gG","n":7,"m":7,"g":5,"q":2,"r":2,"d":3,"t":6,"p":5,"cycle_rank":1,"biconnected":false,"target":6,"slack":0},
+    {"graph6":"FhogG","n":7,"m":8,"g":3,"q":2,"r":2,"d":3,"t":6,"p":5,"cycle_rank":2,"biconnected":false,"target":4,"slack":2},
+    {"graph6":"FxOWO","n":7,"m":8,"g":3,"q":2,"r":2,"d":3,"t":6,"p":6,"cycle_rank":2,"biconnected":false,"target":4,"slack":2},
+    {"graph6":"Fh_gg","n":7,"m":8,"g":4,"q":2,"r":2,"d":3,"t":6,"p":6,"cycle_rank":2,"biconnected":true,"target":5,"slack":1},
+    {"graph6":"Fhogg","n":7,"m":9,"g":3,"q":2,"r":2,"d":3,"t":5,"p":5,"cycle_rank":3,"biconnected":true,"target":4,"slack":1},
+    {"graph6":"FhELO","n":7,"m":9,"g":4,"q":2,"r":2,"d":3,"t":5,"p":5,"cycle_rank":3,"biconnected":true,"target":5,"slack":0}
+  ],
+  "tight_graph6": [
+    "Bw","CN","Cl","C|","C~","DbW","Dhc","D`{","DJ{","Df{","Dl{","Dn{","D~{",
+    "EQKo","EBy?","Ehd?","EhEG","EhUg","E~aG","E~|?","EyVw","E~{W","E~^G","E~~G",
+    "E~nW","Ez~w","E~~w","Fh_gG","FXAGg","FK_h_","FPq?g","FhCKG","FFwG_","F`EBW",
+    "FhUk?","FhELO","FK|ko","F~|AG","F~{Ww","F~~x?","F`~vw","F~~z?","Fe~vw","Ff~xw",
+    "Ffznw","F~~}G","F~^]w","Fvx~w","F~~]w","F~^nw","F~^~w","F~~~w"
+  ]
+}
