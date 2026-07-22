@@ -49,22 +49,40 @@ jobs:
         shell: bash
         run: |
           set +e
-          {
-            echo '$ lake build FormalConjectures.WrittenOnTheWallII.GraphConjecture144'
-            lake build FormalConjectures.WrittenOnTheWallII.GraphConjecture144
-            echo '$ lake env lean -DwarningAsError=true WOW144/Audit.lean'
-            lake env lean -DwarningAsError=true WOW144/Audit.lean
-            echo '$ lake env lean -DwarningAsError=true WOW144/Arithmetic.lean'
-            lake env lean -DwarningAsError=true WOW144/Arithmetic.lean
-            echo '$ lake --wfail build WOW144'
-            lake --wfail build WOW144
-            echo '$ local sorry/axiom scan'
-            if grep -RInE '(^|[^[:alnum:]_])(sorry|axiom)([^[:alnum:]_]|$)' WOW144.lean WOW144; then
-              echo 'Local proof artifacts contain sorry or axiom.' >&2
-              exit 1
+          : > lean-ci.log
+          status=0
+
+          run_check() {
+            printf '$' >> lean-ci.log
+            printf ' %q' "$@" >> lean-ci.log
+            printf '\n' >> lean-ci.log
+            "$@" >> lean-ci.log 2>&1
+            rc=$?
+            if [ "$rc" -ne 0 ]; then
+              status=1
             fi
-          } > lean-ci.log 2>&1
-          status=$?
+          }
+
+          run_check lake build FormalConjectures.WrittenOnTheWallII.GraphConjecture144
+          run_check lake env lean -DwarningAsError=true WOW144/Audit.lean
+          run_check lake env lean -DwarningAsError=true WOW144/Arithmetic.lean
+          run_check lake env lean -DwarningAsError=true WOW144/InducedTree.lean
+          run_check lake --wfail build WOW144
+
+          echo '$ local sorry/axiom scan' >> lean-ci.log
+          grep -RInE '(^|[^[:alnum:]_])(sorry|axiom)([^[:alnum:]_]|$)' \
+            WOW144.lean WOW144 >> lean-ci.log 2>&1
+          scan_rc=$?
+          if [ "$scan_rc" -eq 0 ]; then
+            echo 'Local proof artifacts contain a prohibited declaration or placeholder.' >> lean-ci.log
+            status=1
+          elif [ "$scan_rc" -eq 1 ]; then
+            echo 'No prohibited local declarations or placeholders found.' >> lean-ci.log
+          else
+            echo "Scan command failed with status $scan_rc." >> lean-ci.log
+            status=1
+          fi
+
           echo "exit_status=$status" >> "$GITHUB_OUTPUT"
           printf '\nEXIT_STATUS=%s\n' "$status" >> lean-ci.log
           exit 0
