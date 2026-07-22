@@ -11,22 +11,47 @@ $ lake env lean -DwarningAsError=true WOW144/Arithmetic.lean
 $ lake env lean -DwarningAsError=true WOW144/InducedTree.lean
 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
 $ lake --wfail build WOW144
-ℹ [8040/8045] Built WOW144.InducedTree (4.7s)
+ℹ [8040/8046] Built WOW144.InducedTree (5.1s)
 info: WOW144/InducedTree.lean:32:0: 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
-ℹ [8041/8045] Built WOW144.Audit (5.4s)
+ℹ [8041/8046] Built WOW144.Audit (5.9s)
 info: WOW144/Audit.lean:13:0: WrittenOnTheWallII.GraphConjecture144.conjecture144.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] [Nontrivial α]
   (G : SimpleGraph α) (h : G.Connected) : ↑G.girth - 1 + ↑(G.ecc G.center) ≤ ↑G.largestInducedTreeSize
 info: WOW144/Audit.lean:14:0: SimpleGraph.largestInducedTreeSize.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
 info: WOW144/Audit.lean:15:0: SimpleGraph.ecc.{u_1} {α : Type u_1} [Fintype α] (G : SimpleGraph α) (S : Set α) : ℕ
 info: WOW144/Audit.lean:16:0: SimpleGraph.center.{u_1} {α : Type u_1} (G : SimpleGraph α) : Set α
 info: WOW144/Audit.lean:17:0: SimpleGraph.girth.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
-✔ [8042/8045] Built WOW144.Arithmetic (5.9s)
-ℹ [8043/8045] Built WOW144.CycleBase (5.5s)
+✔ [8042/8046] Built WOW144.Arithmetic (6.3s)
+ℹ [8043/8046] Built WOW144.CycleBase (6.0s)
 info: WOW144/CycleBase.lean:337:0: 'SimpleGraph.girth_sub_one_le_largestInducedTreeSize_wow144' depends on axioms: [propext, Classical.choice, Quot.sound]
 info: WOW144/CycleBase.lean:338:0: 'WOW144.conjecture144_of_centerDepth_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
-✔ [8044/8045] Built WOW144 (3.9s)
-Build completed successfully (8045 jobs).
+✖ [8044/8046] Building WOW144.CycleAttachment (5.0s)
+trace: .> LEAN_PATH=/home/runner/work/WOW-144/WOW-144/.lake/packages/Cli/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/batteries/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/Qq/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/aesop/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/importGraph/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/plausible/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/mathlib/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/formal_conjectures/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean /home/runner/.elan/toolchains/leanprover--lean4---v4.27.0/bin/lean /home/runner/work/WOW-144/WOW-144/WOW144/CycleAttachment.lean -o /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/CycleAttachment.olean -i /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/CycleAttachment.ilean -c /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/CycleAttachment.c --setup /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/CycleAttachment.setup.json --json
+error: WOW144/CycleAttachment.lean:58:4: Type mismatch
+  Finset.mem_of_mem_erase this
+has type
+  y ∈ c.support.toFinset
+but is expected to have type
+  y ∈ c.support
+error: WOW144/CycleAttachment.lean:66:6: Type mismatch
+  Finset.mem_of_mem_erase hb
+has type
+  b ∈ c.support.toFinset
+but is expected to have type
+  b ∈ c.support
+error: WOW144/CycleAttachment.lean:72:8: Unknown constant `Finset.card_insert_of_not_mem`
+info: WOW144/CycleAttachment.lean:80:0: 'SimpleGraph.Walk.IsCycle.unique_attachment_girth_le_largestInducedTreeSize_wow144' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+info: WOW144/CycleAttachment.lean:107:0: 'WOW144.conjecture144_of_centerDepth_one_of_unique_attachment' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+error: Lean exited with code 1
+Some required targets logged failures:
+- WOW144.CycleAttachment
+error: build failed
 $ local sorry/axiom scan
 No prohibited local declarations or placeholders found.
 
-EXIT_STATUS=0
+EXIT_STATUS=1
