@@ -21,7 +21,7 @@ nearest center vertex, with value zero when every vertex is central.
 
 ### OPEN
 
-No exact general proof has yet replaced the upstream `sorry`.
+No exact general proof has yet replaced the upstream placeholder.
 
 ### NEXT
 
@@ -32,7 +32,7 @@ Close the remaining empty-3-core multicyclic case, then formalize the exact theo
 ### PROVEN
 
 - Exact exhaustive search over all 995 connected unlabeled graphs on 2–7
-  vertices found no counterexample.  See `search/exhaustive_atlas.py` and
+  vertices found no counterexample. See `search/exhaustive_atlas.py` and
   `search/exhaustive_atlas_summary.json`.
 - A seeded adversarial deletion test checked 8,830 connected graphs of girth at
   least five and cycle rank at least two, through order 100, with zero failures.
@@ -58,20 +58,21 @@ connected, girth at least five, cycle rank at least two, and empty 3-core.
 
 Human proofs have been completed for:
 
-1. **Acyclic graphs.**  The girth term is zero and the graph itself is an
+1. **Acyclic graphs.** The girth term is zero and the graph itself is an
    induced tree.
-2. **Center depth zero.**  A shortest cycle with one vertex removed is an
-   induced tree of order `girth - 1`.
-3. **Center depth one.**  For girth at least five, attach one outside vertex to
+2. **Center depth zero.** A shortest cycle with one vertex removed is an
+   induced tree of order `girth - 1`. This case is now also formalized and
+   kernel-checked in `WOW144/CycleBase.lean`.
+3. **Center depth one.** For girth at least five, attach one outside vertex to
    a shortest cycle and delete a different cycle vertex; girth forces unique
-   attachment.  Low girth is handled by induced-path bounds.
-4. **All unicyclic graphs.**  A complete weighted-cycle/branch proof is in the
+   attachment. Low girth still needs a formalized case split.
+4. **All unicyclic graphs.** A complete weighted-cycle/branch proof is in the
    local evidence package, validated on 7,834 unicyclic graphs through order 40.
-5. **Graphs with nonempty 3-core, in the hard range.**  An induced minimum-degree
-   three core has girth at least that of the graph.  For girth five, a shortest
+5. **Graphs with nonempty 3-core, in the hard range.** An induced minimum-degree
+   three core has girth at least that of the graph. For girth five, a shortest
    5-cycle plus two forced outside neighbors yields a 6-vertex induced tree.
    For girth at least six, a radius-`floor((g-2)/2)` ball is an induced tree and
-   minimum degree three gives at least `3*2^k-2 ≥ 2g-4` vertices.  This covers
+   minimum degree three gives at least `3*2^k-2 ≥ 2g-4` vertices. This covers
    `girth - 1 + centerDepth` once `centerDepth ≤ girth - 3`.
 
 ### OPEN
@@ -88,54 +89,64 @@ Leading candidate lemma:
 > Some vertex can be deleted while preserving connectedness, girth, and not
 > decreasing center depth.
 
-Induction would then reduce the graph to the proved unicyclic case.
+Induction would then reduce the graph to the proved unicyclic case. Arbitrary
+degree-two deletion is false, so a proof must select a thread globally.
 
 ### NEXT
 
-Prove the candidate by selecting globally among degree-two threads in the
-2-core/block structure.  Arbitrary degree-two deletion is known to be false,
-so the proof must use a global extremal choice.
+Prove the deletion lemma by an extremal choice among degree-two threads in the
+2-core/block structure. In parallel, formalize the already-proved center-depth
+one and unicyclic slices.
 
 ## LEAN
 
 ### PROVEN
 
-The isolated repository contains no-`sorry` candidate support files:
+The isolated repository contains the following checked modules:
 
-- `WOW144/Audit.lean`
-- `WOW144/Arithmetic.lean`
-- `WOW144/InducedTree.lean`
+- `WOW144/Audit.lean`: exact upstream statement and definition audit.
+- `WOW144/Arithmetic.lean`: natural-number-to-real reduction.
+- `WOW144/InducedTree.lean`: explicit induced-tree witness bound.
+- `WOW144/CycleBase.lean`: shortest-cycle deletion certificate,
+  `girth - 1` induced-tree bound, and exact Conjecture 144 for
+  `ecc G G.center = 0`.
 
-A workflow modeled on the successful `WOW-146` workflow has been installed.
+`lean-ci.log` records:
+
+- the pinned upstream Conjecture 144 module built successfully;
+- all local modules compiled with warning-as-error checks;
+- the complete `WOW144` library built successfully in 8,045 jobs;
+- the local prohibited-declaration/placeholder scan passed;
+- final `EXIT_STATUS=0`.
+
+The printed dependencies are only Lean's standard logical foundations:
+`propext`, `Classical.choice`, and `Quot.sound`.
 
 ### OPEN
 
-No GitHub Actions run or `lean-ci.log` has appeared after connector-created
-main pushes, proof-branch pushes, or an issue trigger.  The local runtime has no
-Lean executable.  Therefore **nothing in WOW-144 has yet been kernel-checked**.
-
-The likely cause is that GitHub suppresses workflow triggering for events made
-through the installed app/token, or Actions has not yet been enabled manually
-for the new repository.
+The exact unrestricted theorem has not been formalized. The center-depth-one,
+unicyclic, nonempty-3-core, and remaining deletion arguments are not yet Lean
+artifacts.
 
 ### NEXT
 
-Run `Verify WOWII 144` manually from the repository Actions page, or make one
-ordinary user-authored push.  Once a log exists, fix Lean errors iteratively and
-record exact exit status.
+Formalize the one-vertex cycle attachment package and the center-depth-one
+case, then formalize the unicyclic weighted-cycle proof.
 
 ## REVIEW
 
 ### PROVEN
 
 False auxiliary lemmas and their witnesses have been preserved rather than
-silently discarded.  The original conjecture survived every preserved bounded
-search.
+silently discarded. The original conjecture survived every preserved bounded
+search. The current Lean support layer and center-depth-zero theorem have an
+auditable successful compiler log.
 
 ### OPEN
 
 The unicyclic and 3-core human proofs require an independent line-by-line proof
-review.  No independent Lean review is possible until CI runs.
+review. The checked center-depth-zero theorem also needs an independent source
+review before inclusion in any submission package.
 
 ### NEXT
 
@@ -155,5 +166,5 @@ The conjecture is not solved or candidate solved.
 
 ### NEXT
 
-Do not publish or submit without Brian's explicit approval after exact Lean
-kernel checking and independent review.
+Do not publish or submit without Brian's explicit approval after exact full
+Lean kernel checking and independent review.
