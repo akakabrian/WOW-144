@@ -1,5 +1,11 @@
 import FormalConjectures.WrittenOnTheWallII.GraphConjecture144
 
+/-!
+# Explicit induced-tree witnesses
+
+Connects a concrete finite induced tree to the upstream `largestInducedTreeSize` invariant.
+-/
+
 namespace SimpleGraph
 
 open Classical
@@ -7,6 +13,7 @@ open Classical
 variable {α : Type*} [Fintype α] [DecidableEq α]
 variable {G : SimpleGraph α}
 
+omit [DecidableEq α] in
 /-- Every explicit finite induced tree is bounded by `largestInducedTreeSize`.
 
 This is proved directly from the authoritative `sSup` definition, without using any
