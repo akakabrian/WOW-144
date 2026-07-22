@@ -1,139 +1,88 @@
-name: Lean CI
+name: Verify WOWII 144
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'proof/**'
+      - 'agent-**'
     paths-ignore:
-      - CI_RESULT.md
+      - lean-ci.log
   pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  lean:
+  verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Run Lean checks and capture all exit codes
-        id: leancheck
+      - name: Install elan
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Resolve dependencies
+        run: lake update
+
+      - name: Restore Formal Conjectures build cache
+        uses: actions/cache@v4
+        with:
+          path: .lake/packages/formal_conjectures/.lake/build
+          key: wow144-formal-build-${{ hashFiles('lean-toolchain', 'lakefile.toml') }}
+
+      - name: Download Mathlib cache
+        run: lake exe cache get
+
+      - name: Verify and capture compiler log
+        id: verify
         shell: bash
         run: |
           set +e
-          set -o pipefail
-          : > ci.log
-
-          echo '== Install elan ==' | tee -a ci.log
-          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz \
-            | tar xz >> ci.log 2>&1
-          download_status=${PIPESTATUS[0]}
-          tar_status=${PIPESTATUS[1]}
-          if [[ $download_status -eq 0 && $tar_status -eq 0 ]]; then
-            ./elan-init -y --default-toolchain none >> ci.log 2>&1
-            elan_status=$?
-          else
-            elan_status=1
-          fi
-          export PATH="$HOME/.elan/bin:$PATH"
-
-          echo '== Resolve dependencies ==' | tee -a ci.log
-          if [[ $elan_status -eq 0 ]]; then
-            lake update >> ci.log 2>&1
-            update_status=$?
-          else
-            update_status=1
-          fi
-
-          echo '== Fetch Mathlib cache ==' | tee -a ci.log
-          if [[ $update_status -eq 0 ]]; then
-            lake exe cache get >> ci.log 2>&1
-            cache_status=$?
-          else
-            cache_status=1
-          fi
-
-          echo '== Build WOW144 ==' | tee -a ci.log
-          if [[ $update_status -eq 0 ]]; then
-            lake --wfail build WOW144 >> ci.log 2>&1
-            build_status=$?
-          else
-            build_status=1
-          fi
-
-          echo '== Scan local artifacts for sorry or axiom ==' | tee -a ci.log
-          grep -RInE '(^|[^[:alnum:]_])(sorry|axiom)([^[:alnum:]_]|$)' \
-            WOW144.lean WOW144 > sorry-scan.log 2>&1
-          grep_status=$?
-          if [[ $grep_status -eq 0 ]]; then
-            cat sorry-scan.log >> ci.log
-            scan_status=1
-          elif [[ $grep_status -eq 1 ]]; then
-            echo 'No local sorry or axiom found.' >> ci.log
-            scan_status=0
-          else
-            cat sorry-scan.log >> ci.log
-            scan_status=$grep_status
-          fi
-
-          overall_status=0
-          for status in $elan_status $update_status $cache_status $build_status $scan_status; do
-            if [[ $status -ne 0 ]]; then overall_status=1; fi
-          done
-
           {
-            echo "elan_status=$elan_status"
-            echo "update_status=$update_status"
-            echo "cache_status=$cache_status"
-            echo "build_status=$build_status"
-            echo "scan_status=$scan_status"
-            echo "overall_status=$overall_status"
-          } >> "$GITHUB_OUTPUT"
-
+            echo '$ lake build FormalConjectures.WrittenOnTheWallII.GraphConjecture144'
+            lake build FormalConjectures.WrittenOnTheWallII.GraphConjecture144
+            echo '$ lake env lean -DwarningAsError=true WOW144/Audit.lean'
+            lake env lean -DwarningAsError=true WOW144/Audit.lean
+            echo '$ lake env lean -DwarningAsError=true WOW144/Arithmetic.lean'
+            lake env lean -DwarningAsError=true WOW144/Arithmetic.lean
+            echo '$ lake --wfail build WOW144'
+            lake --wfail build WOW144
+            echo '$ local sorry/axiom scan'
+            if grep -RInE '(^|[^[:alnum:]_])(sorry|axiom)([^[:alnum:]_]|$)' WOW144.lean WOW144; then
+              echo 'Local proof artifacts contain sorry or axiom.' >&2
+              exit 1
+            fi
+          } > lean-ci.log 2>&1
+          status=$?
+          echo "exit_status=$status" >> "$GITHUB_OUTPUT"
+          printf '\nEXIT_STATUS=%s\n' "$status" >> lean-ci.log
           exit 0
 
-      - name: Write auditable CI result
+      - name: Upload compiler log
         if: always()
-        shell: bash
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-ci-log-${{ github.run_id }}
+          path: lean-ci.log
+
+      - name: Publish compiler log on branch pushes
+        if: github.event_name == 'push'
         run: |
-          cat > CI_RESULT.md <<EOF
-          # Lean CI result
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -f lean-ci.log
+          git commit -m "ci: publish Lean compiler log" || true
+          git push origin HEAD:${GITHUB_REF_NAME}
 
-          - Source commit: \`${GITHUB_SHA}\`
-          - Workflow run: \`${GITHUB_RUN_ID}\`
-          - Elan/toolchain setup: \`${{ steps.leancheck.outputs.elan_status }}\`
-          - Dependency resolution: \`${{ steps.leancheck.outputs.update_status }}\`
-          - Mathlib cache: \`${{ steps.leancheck.outputs.cache_status }}\`
-          - Lean build: \`${{ steps.leancheck.outputs.build_status }}\`
-          - Local sorry/axiom scan: \`${{ steps.leancheck.outputs.scan_status }}\`
-          - Overall: \`${{ steps.leancheck.outputs.overall_status }}\`
-
-          Exit code 0 means success.
-
-          ## Log tail
-
-          \`\`\`text
-          EOF
-          tail -n 300 ci.log >> CI_RESULT.md 2>/dev/null || true
-          echo '\`\`\`' >> CI_RESULT.md
-
-      - name: Commit CI result
-        if: always()
-        shell: bash
-        run: |
-          set -euxo pipefail
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add CI_RESULT.md
-          if ! git diff --cached --quiet; then
-            git commit -m 'Record Lean CI result [skip ci]'
-            git push
-          fi
-
-      - name: Enforce Lean result
-        if: always()
-        shell: bash
-        run: test "${{ steps.leancheck.outputs.overall_status }}" = '0'
+      - name: Fail job when Lean failed
+        if: steps.verify.outputs.exit_status != '0'
+        run: exit 1
