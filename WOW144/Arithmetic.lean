@@ -1,10 +1,16 @@
 import FormalConjectures.WrittenOnTheWallII.GraphConjecture144
 
+/-!
+# Arithmetic reduction for Conjecture 144
+
+Reduces the exact real-valued statement to an integral inequality.
+-/
+
 namespace WOW144
 
 open Classical SimpleGraph
 
-variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
+variable {α : Type*} [Fintype α]
 
 /-- It suffices to prove the target inequality in the equivalent natural-number form
 `girth + centerDepth ≤ largestInducedTreeSize + 1`. -/
