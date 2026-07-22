@@ -11,18 +11,21 @@ $ lake env lean -DwarningAsError=true WOW144/Arithmetic.lean
 $ lake env lean -DwarningAsError=true WOW144/InducedTree.lean
 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
 $ lake --wfail build WOW144
-ℹ [8040/8044] Built WOW144.Audit (4.6s)
+ℹ [8040/8045] Built WOW144.InducedTree (4.7s)
+info: WOW144/InducedTree.lean:32:0: 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [8041/8045] Built WOW144.Audit (5.4s)
 info: WOW144/Audit.lean:13:0: WrittenOnTheWallII.GraphConjecture144.conjecture144.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] [Nontrivial α]
   (G : SimpleGraph α) (h : G.Connected) : ↑G.girth - 1 + ↑(G.ecc G.center) ≤ ↑G.largestInducedTreeSize
 info: WOW144/Audit.lean:14:0: SimpleGraph.largestInducedTreeSize.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
 info: WOW144/Audit.lean:15:0: SimpleGraph.ecc.{u_1} {α : Type u_1} [Fintype α] (G : SimpleGraph α) (S : Set α) : ℕ
 info: WOW144/Audit.lean:16:0: SimpleGraph.center.{u_1} {α : Type u_1} (G : SimpleGraph α) : Set α
 info: WOW144/Audit.lean:17:0: SimpleGraph.girth.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
-✔ [8041/8044] Built WOW144.Arithmetic (6.1s)
-ℹ [8042/8044] Built WOW144.InducedTree (6.1s)
-info: WOW144/InducedTree.lean:32:0: 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
-✔ [8043/8044] Built WOW144 (4.1s)
-Build completed successfully (8044 jobs).
+✔ [8042/8045] Built WOW144.Arithmetic (5.9s)
+ℹ [8043/8045] Built WOW144.CycleBase (5.5s)
+info: WOW144/CycleBase.lean:337:0: 'SimpleGraph.girth_sub_one_le_largestInducedTreeSize_wow144' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WOW144/CycleBase.lean:338:0: 'WOW144.conjecture144_of_centerDepth_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [8044/8045] Built WOW144 (3.9s)
+Build completed successfully (8045 jobs).
 $ local sorry/axiom scan
 No prohibited local declarations or placeholders found.
 
