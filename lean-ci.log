@@ -11,28 +11,35 @@ $ lake env lean -DwarningAsError=true WOW144/Arithmetic.lean
 $ lake env lean -DwarningAsError=true WOW144/InducedTree.lean
 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
 $ lake --wfail build WOW144
-ℹ [8040/8046] Built WOW144.InducedTree (5.0s)
-info: WOW144/InducedTree.lean:32:0: 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
-ℹ [8041/8046] Built WOW144.Audit (5.7s)
+ℹ [8040/8047] Built WOW144.Audit (4.4s)
 info: WOW144/Audit.lean:13:0: WrittenOnTheWallII.GraphConjecture144.conjecture144.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] [Nontrivial α]
   (G : SimpleGraph α) (h : G.Connected) : ↑G.girth - 1 + ↑(G.ecc G.center) ≤ ↑G.largestInducedTreeSize
 info: WOW144/Audit.lean:14:0: SimpleGraph.largestInducedTreeSize.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
 info: WOW144/Audit.lean:15:0: SimpleGraph.ecc.{u_1} {α : Type u_1} [Fintype α] (G : SimpleGraph α) (S : Set α) : ℕ
 info: WOW144/Audit.lean:16:0: SimpleGraph.center.{u_1} {α : Type u_1} (G : SimpleGraph α) : Set α
 info: WOW144/Audit.lean:17:0: SimpleGraph.girth.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
-✔ [8042/8046] Built WOW144.Arithmetic (6.3s)
-ℹ [8043/8046] Built WOW144.CycleBase (5.6s)
+ℹ [8041/8047] Built WOW144.InducedTree (5.8s)
+info: WOW144/InducedTree.lean:32:0: 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [8042/8047] Built WOW144.Arithmetic (5.0s)
+ℹ [8043/8047] Built WOW144.CycleBase (5.5s)
 info: WOW144/CycleBase.lean:337:0: 'SimpleGraph.girth_sub_one_le_largestInducedTreeSize_wow144' depends on axioms: [propext, Classical.choice, Quot.sound]
 info: WOW144/CycleBase.lean:338:0: 'WOW144.conjecture144_of_centerDepth_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
-ℹ [8044/8046] Built WOW144.CycleAttachment (5.1s)
+ℹ [8044/8047] Built WOW144.CycleAttachment (5.5s)
 info: WOW144/CycleAttachment.lean:80:0: 'SimpleGraph.Walk.IsCycle.unique_attachment_girth_le_largestInducedTreeSize_wow144' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
 info: WOW144/CycleAttachment.lean:107:0: 'WOW144.conjecture144_of_centerDepth_one_of_unique_attachment' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
-✔ [8045/8046] Built WOW144 (4.1s)
-Build completed successfully (8046 jobs).
+ℹ [8045/8047] Built WOW144.CycleCover (6.6s)
+info: WOW144/CycleCover.lean:388:0: 'SimpleGraph.Walk.IsCycle.center_eq_univ_of_vertex_cover_wow144' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: WOW144/CycleCover.lean:389:0: 'SimpleGraph.Walk.IsCycle.centerDepth_eq_zero_of_vertex_cover_wow144' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+✔ [8046/8047] Built WOW144 (4.0s)
+Build completed successfully (8047 jobs).
 $ local sorry/axiom scan
 No prohibited local declarations or placeholders found.
 
