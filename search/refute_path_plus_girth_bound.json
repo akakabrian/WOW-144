@@ -1,0 +1,38 @@
+{
+  "actual_conjecture_broken": false,
+  "false_statement": "t >= g - 1 + floor((p - 1) / 2) for all cycle-rank-at-least-two graphs",
+  "method": "exact exhaustive vertex-subset search on explicit theta graphs",
+  "networkx_version": "3.6.1",
+  "witnesses": [
+    {
+      "center_depth": 0,
+      "conjecture144_slack": 3,
+      "conjecture144_target": 7,
+      "cycle_rank": 2,
+      "discarded_auxiliary_bound": 11,
+      "discarded_auxiliary_slack": -1,
+      "girth": 8,
+      "graph6": "JhE?GU??GO_",
+      "largest_induced_path": 9,
+      "largest_induced_tree": 10,
+      "lengths": [4, 4, 4],
+      "m": 12,
+      "n": 11
+    },
+    {
+      "center_depth": 0,
+      "conjecture144_slack": 5,
+      "conjecture144_target": 11,
+      "cycle_rank": 2,
+      "discarded_auxiliary_bound": 18,
+      "discarded_auxiliary_slack": -2,
+      "girth": 12,
+      "graph6": "PhCGK?@?G?_P_???_?G?@?_C",
+      "largest_induced_path": 15,
+      "largest_induced_tree": 16,
+      "lengths": [6, 6, 6],
+      "m": 18,
+      "n": 17
+    }
+  ]
+}
