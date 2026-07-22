@@ -1,0 +1,42 @@
+name: Lean CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install elan
+        run: |
+          set -euxo pipefail
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v1.4.2/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Resolve dependencies
+        run: lake update
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Build no-sorry artifacts
+        run: lake --wfail build WOW144
+
+      - name: Reject sorry and axioms in local Lean files
+        run: |
+          set -euxo pipefail
+          if grep -RInE '(^|[^[:alnum:]_])(sorry|axiom)([^[:alnum:]_]|$)' WOW144.lean WOW144; then
+            echo 'Local proof artifacts contain sorry or axiom.' >&2
+            exit 1
+          fi
