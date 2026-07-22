@@ -53,9 +53,9 @@ lemma Walk.IsCycle.unique_attachment_girth_le_largestInducedTreeSize_wow144
   have hyNotBase : y ∉ base.support.toFinset := by
     intro hyBase
     apply hyOut
-    have : y ∈ c.support.toFinset.erase root := by
+    have hyErase : y ∈ c.support.toFinset.erase root := by
       simpa only [hbaseSupport] using hyBase
-    exact Finset.mem_of_mem_erase this
+    simpa using Finset.mem_of_mem_erase hyErase
   have haBase : a ∈ base.support.toFinset := by
     rw [hbaseSupport]
     exact Finset.mem_erase.mpr ⟨hrootNeA.symm, by simpa using haCycle⟩
@@ -63,13 +63,13 @@ lemma Walk.IsCycle.unique_attachment_girth_le_largestInducedTreeSize_wow144
     intro b hb hAdj
     apply huniq
     · rw [hbaseSupport] at hb
-      exact Finset.mem_of_mem_erase hb
+      simpa using Finset.mem_of_mem_erase hb
     · exact hAdj
   have htree :
       (G.induce ((insert y base.support.toFinset : Finset α) : Set α)).IsTree :=
     hbaseTree.induce_insert_of_unique_adj_wow144 hyNotBase haBase hya huniqBase
   have hcard : (insert y base.support.toFinset).card = c.length := by
-    rw [Finset.card_insert_of_not_mem hyNotBase, hbaseCard]
+    rw [Finset.card_insert_of_notMem hyNotBase, hbaseCard]
     have hthree : 3 ≤ c.length := hc.three_le_length
     omega
   calc
