@@ -5,6 +5,7 @@ import WOW144.CycleBase
 import WOW144.CycleAttachment
 import WOW144.CycleCover
 import WOW144.NearestCycle
+import WOW144.NearestSetDepth
 import WOW144.Geodesic
 import WOW144.GeodesicExtension
 import WOW144.GeodesicNeighbor
