@@ -1,0 +1,20 @@
+{
+  "atlas_contrapositive_failures": [],
+  "atlas_girth4_graphs_checked": 55,
+  "atlas_nonextendable_count": 14,
+  "atlas_residual_count": 2,
+  "atlas_residual_failures": [],
+  "candidate_lemma": "At girth four, if q>0 and diameter=q+1, some diametral geodesic has an outside vertex with exactly one path neighbor.",
+  "contrapositive_candidate": "If no diametral geodesic has a one-neighbor outside extension, then center depth is at most diameter-2.",
+  "networkx_version": "3.6.1",
+  "random_attempts_per_sample": 500,
+  "random_contrapositive_failures": [],
+  "random_girth4_graphs_checked": 742,
+  "random_nonextendable_count": 16,
+  "random_order_range": [8, 12],
+  "random_requested_per_order": 150,
+  "random_residual_count": 29,
+  "random_residual_failures": [],
+  "seed": 14404,
+  "status": "computational evidence only"
+}
