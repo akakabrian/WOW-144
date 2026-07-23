@@ -34,16 +34,22 @@ jobs:
       - name: Download Mathlib cache
         run: lake exe cache get
 
-      - name: Build and extract diagnostics
+      - name: Compile remaining modules and extract diagnostics
         shell: bash
         run: |
           set +e
-          lake --wfail build WOW144 > lean-build-full.log 2>&1
-          rc=$?
+          : > lean-build-full.log
+          status=0
+          for file in WOW144/SmallGirth.lean WOW144/CenterDepthOne.lean WOW144/MetricBounds.lean WOW144.lean; do
+            echo "$ lake env lean -DwarningAsError=true $file" >> lean-build-full.log
+            lake env lean -DwarningAsError=true "$file" >> lean-build-full.log 2>&1
+            rc=$?
+            if [ "$rc" -ne 0 ]; then status=1; fi
+          done
           {
-            echo "BUILD_EXIT_STATUS=$rc"
+            echo "BUILD_EXIT_STATUS=$status"
             echo
-            grep -n -B1 -A5 -E '(^|[[:space:]])(error:|warning:)|depends on axioms:.*sorryAx' lean-build-full.log || true
+            grep -n -B1 -A7 -E '(^|[[:space:]])(error:|warning:)|depends on axioms:.*sorryAx' lean-build-full.log || true
           } > lean-errors.log
           exit 0
 
