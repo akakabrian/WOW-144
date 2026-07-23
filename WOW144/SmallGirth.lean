@@ -136,25 +136,26 @@ lemma three_le_diam_of_centerDepth_one_girth_four
   have hed : G.ediam = (2 : ℕ∞) := by
     rw [← ENat.coe_toNat hfinite, ← diam, hdiam]
   have hcenterNe : G.center ≠ Set.univ := center_ne_univ_of_centerDepth_one G hq
-  obtain ⟨c, hcCenter⟩ := G.center_nonempty
-  have hcUniversal : ∀ v : α, c ≠ v → G.Adj c v := by
+  obtain ⟨centerV, hcenterV⟩ := G.center_nonempty
+  have hcenterUniversal : ∀ v : α, centerV ≠ v → G.Adj centerV v := by
     intro v hcv
     by_contra hnadj
-    have hpos : 0 < G.dist c v := hconn.pos_dist_of_ne hcv
-    have hle : G.dist c v ≤ 2 := by
-      have := dist_le_diam hfinite (u := c) (v := v)
+    have hpos : 0 < G.dist centerV v := hconn.pos_dist_of_ne hcv
+    have hle : G.dist centerV v ≤ 2 := by
+      have := dist_le_diam hfinite (u := centerV) (v := v)
       simpa [hdiam] using this
-    have hneOne : G.dist c v ≠ 1 := by
+    have hneOne : G.dist centerV v ≠ 1 := by
       rw [dist_eq_one_iff_adj]
       exact hnadj
-    have hdist : G.dist c v = 2 := by omega
-    have heccGe : (2 : ℕ∞) ≤ G.eccent c := by
+    have hdist : G.dist centerV v = 2 := by omega
+    have heccGe : (2 : ℕ∞) ≤ G.eccent centerV := by
       calc
-        (2 : ℕ∞) = G.edist c v := by
-          rw [← (hconn.preconnected c v).coe_dist_eq_edist, hdist]
+        (2 : ℕ∞) = G.edist centerV v := by
+          rw [← (hconn.preconnected centerV v).coe_dist_eq_edist, hdist]
           simp
-        _ ≤ G.eccent c := edist_le_eccent
-    have hcRadius : G.eccent c = G.radius := (mem_center_iff c).mp hcCenter
+        _ ≤ G.eccent centerV := edist_le_eccent
+    have hcRadius : G.eccent centerV = G.radius :=
+      (mem_center_iff centerV).mp hcenterV
     have hrGe : (2 : ℕ∞) ≤ G.radius := by simpa [hcRadius] using heccGe
     apply hcenterNe
     rw [Set.eq_univ_iff_forall]
@@ -170,16 +171,18 @@ lemma three_le_diam_of_centerDepth_one_girth_four
     intro hacyc
     have := hacyc.girth_eq_zero
     omega
-  obtain ⟨z, c, hc, hgirth⟩ := G.exists_girth_eq_length.mpr hcyc
-  have hcLength : c.length = 4 := by omega
-  obtain ⟨u, v, huc, hvc, huv⟩ :=
-    hc.exists_adj_avoiding_of_length_four_wow144 hcLength c
-  have hcu : G.Adj c u := hcUniversal u huc.symm
-  have hcv : G.Adj c v := hcUniversal v hvc.symm
-  have hcOut : c ∉ huv.toWalk.support := by
-    simp [huc, hvc]
+  obtain ⟨z, cyc, hcycWalk, hgirth⟩ := G.exists_girth_eq_length.mpr hcyc
+  have hcycLength : cyc.length = 4 := by omega
+  obtain ⟨u, v, huCenter, hvCenter, huv⟩ :=
+    hcycWalk.exists_adj_avoiding_of_length_four_wow144
+      (x := centerV) hcycLength
+  have hcu : G.Adj centerV u := hcenterUniversal u huCenter.symm
+  have hcv : G.Adj centerV v := hcenterUniversal v hvCenter.symm
+  have hcenterOut : centerV ∉ huv.toWalk.support := by
+    simp [huCenter, hvCenter]
   have htri : ((huv.toWalk.concat hcv.symm).concat hcu).IsCycle :=
-    huv.isPath_toWalk.concat_two_isCycle_small_wow144 huv.ne hcOut hcv.symm hcu
+    huv.isPath_toWalk.concat_two_isCycle_small_wow144
+      huv.ne hcenterOut hcv.symm hcu
   have hgLe := G.girth_le_length htri
   rw [hg] at hgLe
   norm_num at hgLe
