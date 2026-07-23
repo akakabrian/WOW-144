@@ -8,6 +8,7 @@ import WOW144.NearestCycle
 import WOW144.Geodesic
 import WOW144.SmallGirth
 import WOW144.CenterDepthOne
+import WOW144.MetricBounds
 
 /-!
 # WOW II Conjecture 144
