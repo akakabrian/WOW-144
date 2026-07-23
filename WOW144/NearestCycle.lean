@@ -202,7 +202,7 @@ theorem conjecture144_of_centerDepth_one_girth_ge_five
       G.Adj p.penultimate b → b = ku := by
     intro b hb hpb
     exact hc.outside_neighbor_unique_of_length_eq_girth_wow144
-      hcLength hg hpenOut hkuCycle hb hpenAdj hpb
+      (a := b) (b := ku) hcLength hg hpenOut hb hkuCycle hpb hpenAdj
   obtain ⟨root, hroot, hrootNe⟩ := hc.exists_support_ne_wow144 hkuCycle
   exact conjecture144_of_centerDepth_one_of_unique_attachment
     G hq hc hroot hcLength hpenOut hkuCycle hrootNe hpenAdj hpenUnique
