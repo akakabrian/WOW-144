@@ -161,6 +161,7 @@ open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
+omit [Nontrivial α] in
 /-- Conjecture 144 holds at center depth one when the girth is at least five. -/
 theorem conjecture144_of_centerDepth_one_girth_ge_five
     (G : SimpleGraph α) (hconn : G.Connected)
