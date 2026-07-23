@@ -112,6 +112,7 @@ lemma center_ne_univ_of_centerDepth_one (G : SimpleGraph α)
   rw [hcenter] at hq
   simp [ecc] at hq
 
+omit [DecidableEq α] in
 /-- A connected graph of center depth one has diameter at least two. -/
 lemma two_le_diam_of_centerDepth_one (G : SimpleGraph α) (hconn : G.Connected)
     (hq : ecc G G.center = 1) : 2 ≤ G.diam := by
@@ -181,12 +182,13 @@ lemma three_le_diam_of_centerDepth_one_girth_four
   have hcu : G.Adj centerV u := hcenterUniversal u huCenter.symm
   have hcv : G.Adj centerV v := hcenterUniversal v hvCenter.symm
   have hcenterOut : centerV ∉ huv.toWalk.support := by
-    rw [huv.support_toWalk]
-    simp only [List.mem_cons, List.mem_singleton, not_or]
+    change centerV ≠ u ∧ centerV ≠ v
     exact ⟨Ne.symm huCenter, Ne.symm hvCenter⟩
+  have huvPath : huv.toWalk.IsPath := by
+    apply Walk.IsPath.mk'
+    simp [huv.ne]
   have htri : ((huv.toWalk.concat hcv.symm).concat hcu).IsCycle :=
-    (SimpleGraph.Adj.isPath_toWalk huv).concat_two_isCycle_small_wow144
-      huv.ne hcenterOut hcv.symm hcu
+    huvPath.concat_two_isCycle_small_wow144 huv.ne hcenterOut hcv.symm hcu
   have hgLe := G.girth_le_length htri
   rw [hg] at hgLe
   norm_num at hgLe
