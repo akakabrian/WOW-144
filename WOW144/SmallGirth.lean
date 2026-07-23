@@ -127,6 +127,7 @@ lemma two_le_diam_of_centerDepth_one (G : SimpleGraph α) (hconn : G.Connected)
     exact hnotTop (diam_eq_one.mp h)
   omega
 
+omit [DecidableEq α] in
 /-- At center depth one and girth four, the diameter is at least three. -/
 lemma three_le_diam_of_centerDepth_one_girth_four
     (G : SimpleGraph α) (hconn : G.Connected)
