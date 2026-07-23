@@ -94,7 +94,7 @@ lemma Walk.IsCycle.exists_adj_avoiding_of_length_four_wow144
         exact h12.ne (hx1.symm.trans h.symm)
       · intro h
         exact h13 (hx1.symm.trans h.symm)
-    · exact ⟨c.getVert 0, c.getVert 1, hx0.symm, hx1.symm, h01⟩
+    · exact ⟨c.getVert 0, c.getVert 1, Ne.symm hx0, Ne.symm hx1, h01⟩
 
 end SimpleGraph
 
@@ -104,6 +104,7 @@ open Classical SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
+omit [DecidableEq α] [Nontrivial α] in
 /-- Center depth one implies that not every vertex is central. -/
 lemma center_ne_univ_of_centerDepth_one (G : SimpleGraph α)
     (hq : ecc G G.center = 1) : G.center ≠ Set.univ := by
@@ -135,6 +136,7 @@ lemma three_le_diam_of_centerDepth_one_girth_four
   have hfinite : G.ediam ≠ ⊤ := connected_iff_ediam_ne_top.mp hconn
   have hed : G.ediam = (2 : ℕ∞) := by
     rw [← ENat.coe_toNat hfinite, ← diam, hdiam]
+    simp
   have hcenterNe : G.center ≠ Set.univ := center_ne_univ_of_centerDepth_one G hq
   obtain ⟨centerV, hcenterV⟩ := G.center_nonempty
   have hcenterUniversal : ∀ v : α, centerV ≠ v → G.Adj centerV v := by
@@ -145,8 +147,8 @@ lemma three_le_diam_of_centerDepth_one_girth_four
       have := dist_le_diam hfinite (u := centerV) (v := v)
       simpa [hdiam] using this
     have hneOne : G.dist centerV v ≠ 1 := by
-      rw [dist_eq_one_iff_adj]
-      exact hnadj
+      intro hdist
+      exact hnadj (dist_eq_one_iff_adj.mp hdist)
     have hdist : G.dist centerV v = 2 := by omega
     have heccGe : (2 : ℕ∞) ≤ G.eccent centerV := by
       calc
@@ -179,9 +181,11 @@ lemma three_le_diam_of_centerDepth_one_girth_four
   have hcu : G.Adj centerV u := hcenterUniversal u huCenter.symm
   have hcv : G.Adj centerV v := hcenterUniversal v hvCenter.symm
   have hcenterOut : centerV ∉ huv.toWalk.support := by
-    simp [huCenter, hvCenter]
+    rw [huv.support_toWalk]
+    simp only [List.mem_cons, List.mem_singleton, not_or]
+    exact ⟨Ne.symm huCenter, Ne.symm hvCenter⟩
   have htri : ((huv.toWalk.concat hcv.symm).concat hcu).IsCycle :=
-    huv.isPath_toWalk.concat_two_isCycle_small_wow144
+    (SimpleGraph.Adj.isPath_toWalk huv).concat_two_isCycle_small_wow144
       huv.ne hcenterOut hcv.symm hcu
   have hgLe := G.girth_le_length htri
   rw [hg] at hgLe
