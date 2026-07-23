@@ -11,53 +11,53 @@ $ lake env lean -DwarningAsError=true WOW144/Arithmetic.lean
 $ lake env lean -DwarningAsError=true WOW144/InducedTree.lean
 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
 $ lake --wfail build WOW144
-ℹ [8040/8050] Built WOW144.InducedTree (3.6s)
+ℹ [8040/8052] Built WOW144.Audit (3.8s)
+info: WOW144/Audit.lean:13:0: WrittenOnTheWallII.GraphConjecture144.conjecture144.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] [Nontrivial α]
+  (G : SimpleGraph α) (h : G.Connected) : ↑G.girth - 1 + ↑(G.ecc G.center) ≤ ↑G.largestInducedTreeSize
+info: WOW144/Audit.lean:14:0: SimpleGraph.largestInducedTreeSize.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
+info: WOW144/Audit.lean:15:0: SimpleGraph.ecc.{u_1} {α : Type u_1} [Fintype α] (G : SimpleGraph α) (S : Set α) : ℕ
+info: WOW144/Audit.lean:16:0: SimpleGraph.center.{u_1} {α : Type u_1} (G : SimpleGraph α) : Set α
+info: WOW144/Audit.lean:17:0: SimpleGraph.girth.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
+ℹ [8041/8052] Built WOW144.InducedTree (4.8s)
 info: WOW144/InducedTree.lean:32:0: 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
-✔ [8041/8050] Built WOW144.Arithmetic (3.7s)
-ℹ [8042/8050] Built WOW144.CycleBase (4.6s)
+✔ [8042/8052] Built WOW144.Arithmetic (4.9s)
+ℹ [8043/8052] Built WOW144.CycleBase (4.7s)
 info: WOW144/CycleBase.lean:337:0: 'SimpleGraph.girth_sub_one_le_largestInducedTreeSize_wow144' depends on axioms: [propext, Classical.choice, Quot.sound]
 info: WOW144/CycleBase.lean:338:0: 'WOW144.conjecture144_of_centerDepth_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
-ℹ [8043/8050] Built WOW144.CycleCover (5.8s)
-info: WOW144/CycleCover.lean:388:0: 'SimpleGraph.Walk.IsCycle.center_eq_univ_of_vertex_cover_wow144' depends on axioms: [propext,
- Classical.choice,
- Quot.sound]
-info: WOW144/CycleCover.lean:389:0: 'SimpleGraph.Walk.IsCycle.centerDepth_eq_zero_of_vertex_cover_wow144' depends on axioms: [propext,
- Classical.choice,
- Quot.sound]
-ℹ [8044/8050] Built WOW144.Geodesic (5.9s)
-info: WOW144/Geodesic.lean:126:0: 'SimpleGraph.Walk.chordless_of_length_eq_dist_wow144' depends on axioms: [propext, Classical.choice, Quot.sound]
-info: WOW144/Geodesic.lean:127:0: 'SimpleGraph.Walk.induce_support_toFinset_isTree_of_length_eq_dist_wow144' depends on axioms: [propext,
- Classical.choice,
- Quot.sound]
-info: WOW144/Geodesic.lean:128:0: 'SimpleGraph.diam_add_one_le_largestInducedTreeSize_wow144' depends on axioms: [propext, Classical.choice, Quot.sound]
-ℹ [8045/8050] Built WOW144.CycleAttachment (6.0s)
+ℹ [8044/8052] Built WOW144.CycleAttachment (4.7s)
 info: WOW144/CycleAttachment.lean:80:0: 'SimpleGraph.Walk.IsCycle.unique_attachment_girth_le_largestInducedTreeSize_wow144' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
 info: WOW144/CycleAttachment.lean:107:0: 'WOW144.conjecture144_of_centerDepth_one_of_unique_attachment' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
-ℹ [8046/8050] Built WOW144.NearestCycle (4.2s)
+ℹ [8045/8052] Built WOW144.Geodesic (5.6s)
+info: WOW144/Geodesic.lean:126:0: 'SimpleGraph.Walk.chordless_of_length_eq_dist_wow144' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WOW144/Geodesic.lean:127:0: 'SimpleGraph.Walk.induce_support_toFinset_isTree_of_length_eq_dist_wow144' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: WOW144/Geodesic.lean:128:0: 'SimpleGraph.diam_add_one_le_largestInducedTreeSize_wow144' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [8046/8052] Built WOW144.CycleCover (6.6s)
+info: WOW144/CycleCover.lean:388:0: 'SimpleGraph.Walk.IsCycle.center_eq_univ_of_vertex_cover_wow144' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+info: WOW144/CycleCover.lean:389:0: 'SimpleGraph.Walk.IsCycle.centerDepth_eq_zero_of_vertex_cover_wow144' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ℹ [8047/8052] Built WOW144.NearestCycle (4.3s)
 info: WOW144/NearestCycle.lean:211:0: 'WOW144.conjecture144_of_centerDepth_one_girth_ge_five' depends on axioms: [propext, Classical.choice, Quot.sound]
-ℹ [8047/8050] Built WOW144.MetricBounds (3.0s)
+ℹ [8048/8052] Built WOW144.MetricBounds (4.4s)
 info: WOW144/MetricBounds.lean:52:0: 'SimpleGraph.centerDepth_le_diam_wow144' depends on axioms: [propext, Classical.choice, Quot.sound]
 info: WOW144/MetricBounds.lean:73:0: 'WOW144.conjecture144_of_acyclic' depends on axioms: [propext, Classical.choice, Quot.sound]
-✖ [8048/8050] Building WOW144.PositiveCenterDepth (3.8s)
-trace: .> LEAN_PATH=/home/runner/work/WOW-144/WOW-144/.lake/packages/Cli/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/batteries/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/Qq/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/aesop/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/importGraph/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/plausible/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/mathlib/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/formal_conjectures/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean /home/runner/.elan/toolchains/leanprover--lean4---v4.27.0/bin/lean /home/runner/work/WOW-144/WOW-144/WOW144/PositiveCenterDepth.lean -o /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/PositiveCenterDepth.olean -i /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/PositiveCenterDepth.ilean -c /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/PositiveCenterDepth.c --setup /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/PositiveCenterDepth.setup.json --json
-error: WOW144/PositiveCenterDepth.lean:44:46: typeclass instance problem is stuck
-  DecidableEq ?m.54
-
-Note: Lean will not try to resolve this typeclass instance problem because the type argument to `DecidableEq` is a metavariable. This argument must be fully determined before Lean will try to resolve the typeclass.
-
-Hint: Adding type annotations and supplying implicit arguments to functions can give Lean more information for typeclass resolution. For example, if you have a variable `x` that you intend to be a `Nat`, but Lean reports it as having an unresolved type like `?m`, replacing `x` with `(x : Nat)` can get typeclass resolution un-stuck.
-info: WOW144/PositiveCenterDepth.lean:82:0: 'SimpleGraph.exists_ecc_witness_of_pos_wow144' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-info: WOW144/PositiveCenterDepth.lean:83:0: 'SimpleGraph.centerDepth_add_one_le_diam_wow144' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-info: WOW144/PositiveCenterDepth.lean:107:0: 'WOW144.conjecture144_of_girth_three' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-error: Lean exited with code 1
-Some required targets logged failures:
-- WOW144.PositiveCenterDepth
-error: build failed
+ℹ [8049/8052] Built WOW144.SmallGirth (4.8s)
+info: WOW144/SmallGirth.lean:222:0: 'WOW144.conjecture144_of_centerDepth_one_girth_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WOW144/SmallGirth.lean:223:0: 'WOW144.conjecture144_of_centerDepth_one_girth_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [8050/8052] Built WOW144.CenterDepthOne (4.3s)
+info: WOW144/CenterDepthOne.lean:62:0: 'WOW144.conjecture144_of_centerDepth_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WOW144/CenterDepthOne.lean:63:0: 'WOW144.conjecture144_of_centerDepth_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [8051/8052] Built WOW144 (3.5s)
+Build completed successfully (8052 jobs).
 $ local sorry/axiom scan
 No prohibited local declarations or placeholders found.
 
-EXIT_STATUS=1
+EXIT_STATUS=0
