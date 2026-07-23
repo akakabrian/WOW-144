@@ -13,158 +13,177 @@ theorem conjecture144 (G : SimpleGraph α) (h : G.Connected) :
   sorry
 ```
 
-The dependency is pinned to Formal Conjectures commit
+The isolated project is pinned to Formal Conjectures commit
 `e923379e609b9d5987011a1d1f06ec22ea25cd20` and Lean `v4.27.0`.
 
-`ecc G G.center` is the maximum distance of a non-center vertex from the
-nearest center vertex, with value zero when every vertex is central.
+`ecc G G.center` is the maximum distance from a non-center vertex to the
+nearest center vertex, with value zero if every vertex is central.
 
 ### OPEN
 
-No exact general proof has yet replaced the upstream placeholder.
+No exact unrestricted proof has replaced the authoritative upstream
+placeholder. The project proves substantial exact subclasses only.
 
 ### NEXT
 
-Close the remaining empty-3-core multicyclic case, then formalize the exact theorem.
+Close the remaining cyclic center-depth-at-least-two range, then assemble and
+kernel-check the exact unrestricted theorem.
 
 ## SEARCH
 
 ### PROVEN
 
-- Exact exhaustive search over all 995 connected unlabeled graphs on 2–7
-  vertices found no counterexample. See `search/exhaustive_atlas.py` and
+- Exhaustive search over all 995 connected unlabeled graphs on 2–7 vertices
+  found no counterexample. See `search/exhaustive_atlas.py` and
   `search/exhaustive_atlas_summary.json`.
 - A seeded adversarial deletion test checked 8,830 connected graphs of girth at
   least five and cycle rank at least two, through order 100, with zero failures.
   See `search/test_deletion_lemma.py` and `search/test_deletion_lemma.json`.
-- The tempting shortcut
-  `tree ≥ girth - 1 + floor((path - 1)/2)` is false; balanced theta witnesses
-  are preserved in `search/refute_path_plus_girth_bound.*`.
+- False shortcuts are retained with witnesses. In particular,
+  `tree ≥ girth - 1 + floor((path - 1)/2)` is false; see
+  `search/refute_path_plus_girth_bound.*`.
 
 ### OPEN
 
 Computational evidence is not a proof of the remaining deletion lemma.
-Earlier exploratory graph counts not backed by a preserved artifact are not
-part of the authoritative evidence package.
+Exploratory counts without preserved scripts and outputs are not authoritative
+project evidence.
 
 ### NEXT
 
-Stress and prove the deletion lemma only in the mathematically remaining class:
-connected, girth at least five, cycle rank at least two, and empty 3-core.
+Concentrate search on the mathematically unresolved class: connected cyclic
+graphs with center depth at least two, especially multicyclic graphs with empty
+3-core and long degree-two threads.
 
 ## PROOF
 
-### PROVEN
+### PROVEN — LEAN KERNEL CHECKED
 
-Human proofs have been completed for:
+The exact Conjecture 144 inequality is proved for:
 
-1. **Acyclic graphs.** The girth term is zero and the graph itself is an
-   induced tree.
-2. **Center depth zero.** A shortest cycle with one vertex removed is an
-   induced tree of order `girth - 1`. This case is now also formalized and
-   kernel-checked in `WOW144/CycleBase.lean`.
-3. **Center depth one.** For girth at least five, attach one outside vertex to
-   a shortest cycle and delete a different cycle vertex; girth forces unique
-   attachment. Low girth still needs a formalized case split.
-4. **All unicyclic graphs.** A complete weighted-cycle/branch proof is in the
-   local evidence package, validated on 7,834 unicyclic graphs through order 40.
-5. **Graphs with nonempty 3-core, in the hard range.** An induced minimum-degree
-   three core has girth at least that of the graph. For girth five, a shortest
-   5-cycle plus two forced outside neighbors yields a 6-vertex induced tree.
-   For girth at least six, a radius-`floor((g-2)/2)` ball is an induced tree and
-   minimum degree three gives at least `3*2^k-2 ≥ 2g-4` vertices. This covers
-   `girth - 1 + centerDepth` once `centerDepth ≤ girth - 3`.
+1. **Every connected acyclic graph.** The formal proof combines
+   `ecc G G.center ≤ G.diam` with an induced diametral geodesic of order
+   `G.diam + 1`.
+2. **Center depth zero.** Deleting one vertex from a girth-realizing cycle gives
+   an induced tree on exactly `girth - 1` vertices.
+3. **Center depth one, all girths.** The proof covers:
+   - girth three via the diametral-geodesic bound;
+   - girth four via a diameter-two contradiction producing a triangle;
+   - girth at least five via a nearest path to a shortest cycle and the unique
+     cycle-attachment construction.
+4. Therefore the exact theorem is proved whenever
+   `ecc G G.center ≤ 1`.
+
+Reusable checked results include:
+
+- every explicit finite induced tree is bounded by `largestInducedTreeSize`;
+- `G.girth - 1 ≤ largestInducedTreeSize G` for cyclic graphs;
+- `G.diam + 1 ≤ largestInducedTreeSize G` for connected graphs;
+- `ecc G G.center ≤ G.diam`;
+- a shortest cycle covering every vertex forces `G.center = Set.univ`;
+- one unique outside attachment to a shortest cycle yields an induced tree on
+  `girth` vertices.
+
+### PROVEN — HUMAN / NOT YET FORMALIZED
+
+A human weighted-cycle argument has been developed for unicyclic graphs, and a
+separate large-core argument has been developed for the nonempty-3-core part of
+the hard range. These are not counted as Lean-verified results and still need
+independent line-by-line review before formalization.
 
 ### OPEN
 
-The remaining class is:
+After the checked cases, the principal unresolved range is cyclic graphs with
+center depth at least two. The computationally supported induction candidate is:
 
-- girth at least five;
-- center depth at least two and at most `girth - 3`;
-- cycle rank at least two;
-- empty 3-core (subdivision-like / 2-degenerate structure).
+> Some vertex can be deleted while preserving connectedness and girth and
+> without decreasing center depth.
 
-Leading candidate lemma:
-
-> Some vertex can be deleted while preserving connectedness, girth, and not
-> decreasing center depth.
-
-Induction would then reduce the graph to the proved unicyclic case. Arbitrary
-degree-two deletion is false, so a proof must select a thread globally.
+Arbitrary degree-two deletion is false, so any proof must choose globally among
+threads or blocks.
 
 ### NEXT
 
-Prove the deletion lemma by an extremal choice among degree-two threads in the
-2-core/block structure. In parallel, formalize the already-proved center-depth
-one and unicyclic slices.
+1. Kernel-check the branch theorem that positive center depth satisfies
+   `ecc G G.center + 1 ≤ G.diam`; it would prove the full girth-three class.
+2. Prove the center-depth-preserving deletion lemma or replace it with a direct
+   weighted-kernel/block decomposition.
+3. Formalize the unicyclic argument only after independent proof review.
 
 ## LEAN
 
 ### PROVEN
 
-The isolated repository contains the following checked modules:
+The main branch currently contains and builds:
 
-- `WOW144/Audit.lean`: exact upstream statement and definition audit.
-- `WOW144/Arithmetic.lean`: natural-number-to-real reduction.
-- `WOW144/InducedTree.lean`: explicit induced-tree witness bound.
-- `WOW144/CycleBase.lean`: shortest-cycle deletion certificate,
-  `girth - 1` induced-tree bound, and exact Conjecture 144 for
-  `ecc G G.center = 0`.
+- `WOW144/Audit.lean`
+- `WOW144/Arithmetic.lean`
+- `WOW144/InducedTree.lean`
+- `WOW144/CycleBase.lean`
+- `WOW144/CycleAttachment.lean`
+- `WOW144/CycleCover.lean`
+- `WOW144/Geodesic.lean`
+- `WOW144/NearestCycle.lean`
+- `WOW144/MetricBounds.lean`
+- `WOW144/SmallGirth.lean`
+- `WOW144/CenterDepthOne.lean`
 
-`lean-ci.log` records:
+The authoritative `lean-ci.log` records:
 
 - the pinned upstream Conjecture 144 module built successfully;
-- all local modules compiled with warning-as-error checks;
-- the complete `WOW144` library built successfully in 8,045 jobs;
-- the local prohibited-declaration/placeholder scan passed;
+- all local modules built with warnings treated as errors;
+- the complete `WOW144` target built successfully in 8,052 jobs;
+- all printed local theorems depend only on Lean's standard logical
+  foundations (`propext`, `Classical.choice`, and `Quot.sound`);
+- the local `sorry`/`axiom` scan found no prohibited declarations or
+  placeholders;
 - final `EXIT_STATUS=0`.
-
-The printed dependencies are only Lean's standard logical foundations:
-`propext`, `Classical.choice`, and `Quot.sound`.
 
 ### OPEN
 
-The exact unrestricted theorem has not been formalized. The center-depth-one,
-unicyclic, nonempty-3-core, and remaining deletion arguments are not yet Lean
-artifacts.
+The unrestricted theorem is not a Lean artifact. The branch
+`proof/positive-center-depth` contains the next metric extension and is being
+checked independently.
 
 ### NEXT
 
-Formalize the one-vertex cycle attachment package and the center-depth-one
-case, then formalize the unicyclic weighted-cycle proof.
+After the branch passes, port its two theorems to `main`, run a fresh clean
+build, and then continue with the center-depth-at-least-two structural lemma.
 
 ## REVIEW
 
 ### PROVEN
 
-False auxiliary lemmas and their witnesses have been preserved rather than
-silently discarded. The original conjecture survived every preserved bounded
-search. The current Lean support layer and center-depth-zero theorem have an
-auditable successful compiler log.
+- False auxiliary lemmas and their witnesses are preserved rather than silently
+  discarded.
+- The exact theorem statement has not been weakened or changed.
+- The checked subclass proofs have auditable compiler output and no local
+  placeholders.
 
 ### OPEN
 
-The unicyclic and 3-core human proofs require an independent line-by-line proof
-review. The checked center-depth-zero theorem also needs an independent source
-review before inclusion in any submission package.
+- The unicyclic and nonempty-3-core human proofs need independent review.
+- The deletion lemma remains computationally supported but unproved.
+- A separate review pass is required before any upstream submission package.
 
 ### NEXT
 
-Adversarially review the global deletion lemma and the reduction to the hard
-range before claiming a complete proof.
+Review the positive-depth diameter proof after CI, then adversarially review the
+remaining block/thread reduction.
 
 ## SUBMISSION
 
 ### PROVEN
 
-No upstream checkout, Conjecture 146 artifact, pull request, or maintainer
-contact has been modified or initiated.
+No upstream checkout, Conjecture 146 artifact, upstream pull request, or
+maintainer communication has been modified or initiated.
 
 ### OPEN
 
-The conjecture is not solved or candidate solved.
+Conjecture 144 is not solved or candidate solved in full.
 
 ### NEXT
 
-Do not publish or submit without Brian's explicit approval after exact full
-Lean kernel checking and independent review.
+Do not publish or submit upstream without Brian's separate explicit approval
+after the exact unrestricted theorem passes Lean and receives independent
+review.
