@@ -37,13 +37,17 @@ omit [DecidableEq α] [Nontrivial α] in
 /-- A positive value of `ecc G S` is attained by a vertex outside `S`. -/
 lemma exists_ecc_witness_of_pos_wow144 (S : Set α) (hpos : 0 < ecc G S) :
     ∃ x, x ∉ S ∧ G.distToSet x S = ecc G S := by
-  simp only [ecc] at hpos ⊢
-  split_ifs with hout at hpos ⊢
-  · obtain ⟨x, hx, hval⟩ :=
+  by_cases hout : (Finset.univ.filter (fun v : α => v ∉ S)).Nonempty
+  · simp only [ecc]
+    rw [dif_pos hout]
+    obtain ⟨x, hx, hval⟩ :=
       Finset.mem_image.mp (Finset.max'_mem _ (hout.image _))
     exact ⟨x, (Finset.mem_filter.mp hx).2, hval⟩
-  · omega
+  · simp only [ecc] at hpos
+    rw [dif_neg hout] at hpos
+    omega
 
+omit [DecidableEq α] in
 /-- Positive center depth is strictly smaller than the diameter. -/
 lemma centerDepth_add_one_le_diam_wow144 (hconn : G.Connected)
     (hpos : 0 < ecc G G.center) :
