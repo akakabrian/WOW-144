@@ -6,6 +6,7 @@ import WOW144.CycleAttachment
 import WOW144.CycleCover
 import WOW144.NearestCycle
 import WOW144.Geodesic
+import WOW144.GeodesicExtension
 import WOW144.SmallGirth
 import WOW144.CenterDepthOne
 import WOW144.MetricBounds
