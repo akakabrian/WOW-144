@@ -32,6 +32,7 @@ open Classical
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 variable {G : SimpleGraph α}
 
+omit [DecidableEq α] in
 /-- The maximum distance from a noncenter vertex to the center is at most the
 diameter. -/
 lemma centerDepth_le_diam_wow144 (hconn : G.Connected) :
