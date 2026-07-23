@@ -1,0 +1,56 @@
+name: Diagnose WOWII 144 Lean errors
+
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install elan
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Resolve dependencies
+        run: lake update
+
+      - name: Restore Formal Conjectures build cache
+        uses: actions/cache@v4
+        with:
+          path: .lake/packages/formal_conjectures/.lake/build
+          key: wow144-formal-build-${{ hashFiles('lean-toolchain', 'lakefile.toml') }}
+
+      - name: Download Mathlib cache
+        run: lake exe cache get
+
+      - name: Build and extract diagnostics
+        shell: bash
+        run: |
+          set +e
+          lake --wfail build WOW144 > lean-build-full.log 2>&1
+          rc=$?
+          {
+            echo "BUILD_EXIT_STATUS=$rc"
+            echo
+            grep -n -B1 -A5 -E '(^|[[:space:]])(error:|warning:)|depends on axioms:.*sorryAx' lean-build-full.log || true
+          } > lean-errors.log
+          exit 0
+
+      - name: Publish diagnostics
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -f lean-errors.log
+          git commit -m "ci: publish concise Lean diagnostics" || true
+          git push origin HEAD:main
