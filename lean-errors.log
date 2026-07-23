@@ -1,0 +1,41 @@
+BUILD_EXIT_STATUS=1
+
+1-$ lake env lean -DwarningAsError=true WOW144/SmallGirth.lean
+2:WOW144/SmallGirth.lean:17:0: error: unknown module prefix 'WOW144'
+3-
+4-No directory 'WOW144' or file 'WOW144.olean' in the search path entries:
+5-/home/runner/work/WOW-144/WOW-144/.lake/packages/Cli/.lake/build/lib/lean
+6-/home/runner/work/WOW-144/WOW-144/.lake/packages/batteries/.lake/build/lib/lean
+7-/home/runner/work/WOW-144/WOW-144/.lake/packages/Qq/.lake/build/lib/lean
+8-/home/runner/work/WOW-144/WOW-144/.lake/packages/aesop/.lake/build/lib/lean
+9-/home/runner/work/WOW-144/WOW-144/.lake/packages/proofwidgets/.lake/build/lib/lean
+--
+18-$ lake env lean -DwarningAsError=true WOW144/CenterDepthOne.lean
+19:WOW144/CenterDepthOne.lean:17:0: error: unknown module prefix 'WOW144'
+20-
+21-No directory 'WOW144' or file 'WOW144.olean' in the search path entries:
+22-/home/runner/work/WOW-144/WOW-144/.lake/packages/Cli/.lake/build/lib/lean
+23-/home/runner/work/WOW-144/WOW-144/.lake/packages/batteries/.lake/build/lib/lean
+24-/home/runner/work/WOW-144/WOW-144/.lake/packages/Qq/.lake/build/lib/lean
+25-/home/runner/work/WOW-144/WOW-144/.lake/packages/aesop/.lake/build/lib/lean
+26-/home/runner/work/WOW-144/WOW-144/.lake/packages/proofwidgets/.lake/build/lib/lean
+--
+35-$ lake env lean -DwarningAsError=true WOW144/MetricBounds.lean
+36:WOW144/MetricBounds.lean:17:0: error: unknown module prefix 'WOW144'
+37-
+38-No directory 'WOW144' or file 'WOW144.olean' in the search path entries:
+39-/home/runner/work/WOW-144/WOW-144/.lake/packages/Cli/.lake/build/lib/lean
+40-/home/runner/work/WOW-144/WOW-144/.lake/packages/batteries/.lake/build/lib/lean
+41-/home/runner/work/WOW-144/WOW-144/.lake/packages/Qq/.lake/build/lib/lean
+42-/home/runner/work/WOW-144/WOW-144/.lake/packages/aesop/.lake/build/lib/lean
+43-/home/runner/work/WOW-144/WOW-144/.lake/packages/proofwidgets/.lake/build/lib/lean
+--
+52-$ lake env lean -DwarningAsError=true WOW144.lean
+53:WOW144.lean:1:0: error: unknown module prefix 'WOW144'
+54-
+55-No directory 'WOW144' or file 'WOW144.olean' in the search path entries:
+56-/home/runner/work/WOW-144/WOW-144/.lake/packages/Cli/.lake/build/lib/lean
+57-/home/runner/work/WOW-144/WOW-144/.lake/packages/batteries/.lake/build/lib/lean
+58-/home/runner/work/WOW-144/WOW-144/.lake/packages/Qq/.lake/build/lib/lean
+59-/home/runner/work/WOW-144/WOW-144/.lake/packages/aesop/.lake/build/lib/lean
+60-/home/runner/work/WOW-144/WOW-144/.lake/packages/proofwidgets/.lake/build/lib/lean
