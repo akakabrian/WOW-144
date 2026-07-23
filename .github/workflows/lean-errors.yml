@@ -40,9 +40,9 @@ jobs:
           set +e
           : > lean-build-full.log
           status=0
-          for file in WOW144/SmallGirth.lean WOW144/CenterDepthOne.lean WOW144/MetricBounds.lean WOW144.lean; do
-            echo "$ lake env lean -DwarningAsError=true $file" >> lean-build-full.log
-            lake env lean -DwarningAsError=true "$file" >> lean-build-full.log 2>&1
+          for target in WOW144.SmallGirth WOW144.CenterDepthOne WOW144.MetricBounds WOW144; do
+            echo "$ lake --wfail build $target" >> lean-build-full.log
+            lake --wfail build "$target" >> lean-build-full.log 2>&1
             rc=$?
             if [ "$rc" -ne 0 ]; then status=1; fi
           done
