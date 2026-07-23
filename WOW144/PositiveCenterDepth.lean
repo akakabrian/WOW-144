@@ -37,14 +37,19 @@ omit [DecidableEq α] [Nontrivial α] in
 /-- A positive value of `ecc G S` is attained by a vertex outside `S`. -/
 lemma exists_ecc_witness_of_pos_wow144 (S : Set α) (hpos : 0 < ecc G S) :
     ∃ x, x ∉ S ∧ G.distToSet x S = ecc G S := by
-  by_cases hout : (Finset.univ.filter (fun v : α => v ∉ S)).Nonempty
-  · simp only [ecc]
-    rw [dif_pos hout]
-    obtain ⟨x, hx, hval⟩ :=
-      Finset.mem_image.mp (Finset.max'_mem _ (hout.image _))
-    exact ⟨x, (Finset.mem_filter.mp hx).2, hval⟩
-  · simp only [ecc] at hpos
-    rw [dif_neg hout] at hpos
+  let outside : Finset α := Finset.univ.filter (fun v : α => v ∉ S)
+  by_cases hout : outside.Nonempty
+  · let distances : Finset ℕ := outside.image (fun v : α => G.distToSet v S)
+    have hdistances : distances.Nonempty := hout.image _
+    obtain ⟨x, hxOutside, hval⟩ :=
+      Finset.mem_image.mp (Finset.max'_mem distances hdistances)
+    have hxNot : x ∉ S := by
+      have hxFilter : x ∈ Finset.univ.filter (fun v : α => v ∉ S) := by
+        simpa [outside] using hxOutside
+      exact (Finset.mem_filter.mp hxFilter).2
+    refine ⟨x, hxNot, ?_⟩
+    simpa [ecc, outside, distances, hout] using hval
+  · have : ecc G S = 0 := by simp [ecc, outside, hout]
     omega
 
 omit [DecidableEq α] in
