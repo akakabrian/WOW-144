@@ -9,6 +9,7 @@ import WOW144.Geodesic
 import WOW144.SmallGirth
 import WOW144.CenterDepthOne
 import WOW144.MetricBounds
+import WOW144.PositiveCenterDepth
 
 /-!
 # WOW II Conjecture 144
