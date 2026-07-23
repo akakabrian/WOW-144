@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import WOW144.InducedTree
+import WOW144.CycleBase
 
 /-!
 # Induced geodesic trees
@@ -30,6 +30,48 @@ open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 variable {G : SimpleGraph α}
+
+omit [Fintype α] [DecidableEq α] [Nontrivial α] in
+/-- Every distance-realizing walk is chordless. -/
+lemma Walk.chordless_of_length_eq_dist_wow144
+    {u v x y : α} (p : G.Walk u v)
+    (hp : p.length = G.dist u v) (hx : x ∈ p.support) (hy : y ∈ p.support)
+    (hxy : G.Adj x y) : s(x, y) ∈ p.edges := by
+  induction p with
+  | @nil u =>
+      simp only [Walk.support_nil, List.mem_singleton] at hx hy
+      subst x
+      subst y
+      exact (hxy.ne rfl).elim
+  | @cons u v w huv p ih =>
+      have hptail : p.length = G.dist v w :=
+        length_eq_dist_of_subwalk hp (Walk.isSubwalk_cons p huv)
+      have huniq : ∀ ⦃b : α⦄, b ∈ p.support → G.Adj u b → b = v := by
+        intro b hb hub
+        obtain ⟨i, hi, hib⟩ := List.mem_iff_getElem.mp hb
+        have hget : p.getVert i = b := by
+          rw [← p.support_getElem_eq_getVert hi, hib]
+        have hiLe : i ≤ p.length := by
+          have hlen := p.length_support
+          omega
+        have hub' : G.Adj u (p.getVert i) := by simpa [hget] using hub
+        let r : G.Walk u w := (p.drop i).cons hub'
+        have hdistLe : G.dist u w ≤ r.length := G.dist_le r
+        have hlen : (p.cons huv).length ≤ r.length := by simpa [hp] using hdistLe
+        have hi0 : i = 0 := by
+          simp only [Walk.length_cons, r, Walk.drop_length] at hlen
+          omega
+        subst i
+        simpa using hget.symm
+      simp only [Walk.support_cons, List.mem_cons] at hx hy
+      rw [Walk.edges_cons]
+      rcases hx with rfl | hx <;> rcases hy with rfl | hy
+      · exact (hxy.ne rfl).elim
+      · have hyv : y = v := huniq hy hxy
+        simp [hyv]
+      · have hxv : x = v := huniq hx hxy.symm
+        simp [hxv, Sym2.eq_swap]
+      · exact List.mem_cons_of_mem _ (ih hptail hx hy)
 
 omit [Fintype α] [Nontrivial α] in
 /-- The support of a distance-realizing walk induces a tree. -/
@@ -60,7 +102,7 @@ lemma Walk.induce_support_toFinset_isTree_of_length_eq_dist_wow144
         have hbSupport : b ∈ (p.cons huv).support := by
           simp only [Walk.support_cons, List.mem_cons]
           exact Or.inr (by simpa using hb)
-        have hedge := (p.cons huv).chordless_of_length_eq_dist hp
+        have hedge := (p.cons huv).chordless_of_length_eq_dist_wow144 hp
           (by simp) hbSupport hub
         simpa using hfullPath.eq_snd_of_mem_edges hedge
       have hsupp : (Walk.cons huv p).support.toFinset =
@@ -81,6 +123,7 @@ lemma diam_add_one_le_largestInducedTreeSize_wow144 (hG : G.Connected) :
     _ = p.support.toFinset.card := hcard.symm
     _ ≤ largestInducedTreeSize G := finset_card_le_largestInducedTreeSize htree
 
+#print axioms Walk.chordless_of_length_eq_dist_wow144
 #print axioms Walk.induce_support_toFinset_isTree_of_length_eq_dist_wow144
 #print axioms diam_add_one_le_largestInducedTreeSize_wow144
 
