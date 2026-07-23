@@ -6,6 +6,7 @@ import WOW144.CycleAttachment
 import WOW144.CycleCover
 import WOW144.NearestCycle
 import WOW144.Geodesic
+import WOW144.SmallGirth
 
 /-!
 # WOW II Conjecture 144
