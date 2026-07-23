@@ -11,66 +11,70 @@ $ lake env lean -DwarningAsError=true WOW144/Arithmetic.lean
 $ lake env lean -DwarningAsError=true WOW144/InducedTree.lean
 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
 $ lake --wfail build WOW144
-ℹ [8040/8052] Built WOW144.InducedTree (5.3s)
+✔ [8040/8050] Built WOW144.Arithmetic (4.9s)
+ℹ [8041/8050] Built WOW144.InducedTree (4.9s)
 info: WOW144/InducedTree.lean:32:0: 'SimpleGraph.finset_card_le_largestInducedTreeSize' depends on axioms: [propext, Classical.choice, Quot.sound]
-✔ [8041/8052] Built WOW144.Arithmetic (5.6s)
-ℹ [8042/8052] Built WOW144.Audit (5.9s)
-info: WOW144/Audit.lean:13:0: WrittenOnTheWallII.GraphConjecture144.conjecture144.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] [Nontrivial α]
-  (G : SimpleGraph α) (h : G.Connected) : ↑G.girth - 1 + ↑(G.ecc G.center) ≤ ↑G.largestInducedTreeSize
-info: WOW144/Audit.lean:14:0: SimpleGraph.largestInducedTreeSize.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
-info: WOW144/Audit.lean:15:0: SimpleGraph.ecc.{u_1} {α : Type u_1} [Fintype α] (G : SimpleGraph α) (S : Set α) : ℕ
-info: WOW144/Audit.lean:16:0: SimpleGraph.center.{u_1} {α : Type u_1} (G : SimpleGraph α) : Set α
-info: WOW144/Audit.lean:17:0: SimpleGraph.girth.{u_1} {α : Type u_1} (G : SimpleGraph α) : ℕ
-ℹ [8043/8052] Built WOW144.CycleBase (5.7s)
+ℹ [8042/8050] Built WOW144.CycleBase (5.9s)
 info: WOW144/CycleBase.lean:337:0: 'SimpleGraph.girth_sub_one_le_largestInducedTreeSize_wow144' depends on axioms: [propext, Classical.choice, Quot.sound]
 info: WOW144/CycleBase.lean:338:0: 'WOW144.conjecture144_of_centerDepth_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
-ℹ [8044/8052] Built WOW144.Geodesic (6.4s)
+ℹ [8043/8050] Built WOW144.Geodesic (6.0s)
 info: WOW144/Geodesic.lean:126:0: 'SimpleGraph.Walk.chordless_of_length_eq_dist_wow144' depends on axioms: [propext, Classical.choice, Quot.sound]
 info: WOW144/Geodesic.lean:127:0: 'SimpleGraph.Walk.induce_support_toFinset_isTree_of_length_eq_dist_wow144' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
 info: WOW144/Geodesic.lean:128:0: 'SimpleGraph.diam_add_one_le_largestInducedTreeSize_wow144' depends on axioms: [propext, Classical.choice, Quot.sound]
-ℹ [8045/8052] Built WOW144.CycleAttachment (6.8s)
+ℹ [8044/8050] Built WOW144.CycleAttachment (7.2s)
 info: WOW144/CycleAttachment.lean:80:0: 'SimpleGraph.Walk.IsCycle.unique_attachment_girth_le_largestInducedTreeSize_wow144' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
 info: WOW144/CycleAttachment.lean:107:0: 'WOW144.conjecture144_of_centerDepth_one_of_unique_attachment' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
-ℹ [8046/8052] Built WOW144.CycleCover (8.1s)
+ℹ [8045/8050] Built WOW144.CycleCover (8.5s)
 info: WOW144/CycleCover.lean:388:0: 'SimpleGraph.Walk.IsCycle.center_eq_univ_of_vertex_cover_wow144' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
 info: WOW144/CycleCover.lean:389:0: 'SimpleGraph.Walk.IsCycle.centerDepth_eq_zero_of_vertex_cover_wow144' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
-ℹ [8047/8052] Built WOW144.NearestCycle (5.2s)
+ℹ [8046/8050] Built WOW144.NearestCycle (5.4s)
 info: WOW144/NearestCycle.lean:211:0: 'WOW144.conjecture144_of_centerDepth_one_girth_ge_five' depends on axioms: [propext, Classical.choice, Quot.sound]
-ℹ [8048/8052] Built WOW144.MetricBounds (5.3s)
+ℹ [8047/8050] Built WOW144.MetricBounds (5.2s)
 info: WOW144/MetricBounds.lean:52:0: 'SimpleGraph.centerDepth_le_diam_wow144' depends on axioms: [propext, Classical.choice, Quot.sound]
 info: WOW144/MetricBounds.lean:73:0: 'WOW144.conjecture144_of_acyclic' depends on axioms: [propext, Classical.choice, Quot.sound]
-✖ [8049/8052] Building WOW144.SmallGirth (5.5s)
-trace: .> LEAN_PATH=/home/runner/work/WOW-144/WOW-144/.lake/packages/Cli/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/batteries/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/Qq/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/aesop/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/importGraph/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/plausible/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/mathlib/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/formal_conjectures/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean /home/runner/.elan/toolchains/leanprover--lean4---v4.27.0/bin/lean /home/runner/work/WOW-144/WOW-144/WOW144/SmallGirth.lean -o /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/SmallGirth.olean -i /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/SmallGirth.ilean -c /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/SmallGirth.c --setup /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/SmallGirth.setup.json --json
-error: WOW144/SmallGirth.lean:187:29: Application type mismatch: The argument
-  Ne.symm hvCenter
-has type
-  centerV ≠ v
-but is expected to have type
-  ¬centerV = v ∧ centerV ∉ []
-in the application
-  ⟨Ne.symm huCenter, Ne.symm hvCenter⟩
-warning: WOW144/SmallGirth.lean:186:21: This simp argument is unused:
-  List.mem_singleton
+✖ [8048/8050] Building WOW144.PositiveCenterDepth (4.9s)
+trace: .> LEAN_PATH=/home/runner/work/WOW-144/WOW-144/.lake/packages/Cli/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/batteries/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/Qq/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/aesop/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/importGraph/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/plausible/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/mathlib/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/packages/formal_conjectures/.lake/build/lib/lean:/home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean /home/runner/.elan/toolchains/leanprover--lean4---v4.27.0/bin/lean /home/runner/work/WOW-144/WOW-144/WOW144/PositiveCenterDepth.lean -o /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/PositiveCenterDepth.olean -i /home/runner/work/WOW-144/WOW-144/.lake/build/lib/lean/WOW144/PositiveCenterDepth.ilean -c /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/PositiveCenterDepth.c --setup /home/runner/work/WOW-144/WOW-144/.lake/build/ir/WOW144/PositiveCenterDepth.setup.json --json
+error: WOW144/PositiveCenterDepth.lean:39:46: unsolved goals
+case pos
+α : Type u_1
+inst✝ : Fintype α
+G : SimpleGraph α
+S : Set α
+hpos : 0 < if h : {v | v ∉ S}.Nonempty then (Finset.image (fun v => G.distToSet v S) {v | v ∉ S}).max' ⋯ else 0
+hout : {v | v ∉ S}.Nonempty
+⊢ ∃ x ∉ S, G.distToSet x S = (Finset.image (fun v => G.distToSet v S) {v | v ∉ S}).max' ⋯
 
-Hint: Omit it from the simp argument list.
-  simp only [SimpleGraph.Adj.toWalk, Walk.support_cons, Walk.support_nil, List.mem_cons, L̵i̵s̵t̵.̵m̵e̵m̵_̵s̵i̵n̵g̵l̵e̵t̵o̵n̵,̵ ̵not_or]
+case neg
+α : Type u_1
+inst✝ : Fintype α
+G : SimpleGraph α
+S : Set α
+hpos : 0 < if h : {v | v ∉ S}.Nonempty then (Finset.image (fun v => G.distToSet v S) {v | v ∉ S}).max' ⋯ else 0
+hout : ¬{v | v ∉ S}.Nonempty
+⊢ ∃ x ∉ S, G.distToSet x S = 0
+error: WOW144/PositiveCenterDepth.lean:41:22: unexpected token 'at'; expected command
+warning: WOW144/PositiveCenterDepth.lean:48:0: automatically included section variable(s) unused in theorem `SimpleGraph.centerDepth_add_one_le_diam_wow144`:
+  [DecidableEq α]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq α] in theorem ...
 
-Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
-info: WOW144/SmallGirth.lean:221:0: 'WOW144.conjecture144_of_centerDepth_one_girth_three' depends on axioms: [propext, Classical.choice, Quot.sound]
-info: WOW144/SmallGirth.lean:222:0: 'WOW144.conjecture144_of_centerDepth_one_girth_four' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+info: WOW144/PositiveCenterDepth.lean:78:0: 'SimpleGraph.exists_ecc_witness_of_pos_wow144' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+info: WOW144/PositiveCenterDepth.lean:79:0: 'SimpleGraph.centerDepth_add_one_le_diam_wow144' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+info: WOW144/PositiveCenterDepth.lean:103:0: 'WOW144.conjecture144_of_girth_three' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
 error: Lean exited with code 1
 Some required targets logged failures:
-- WOW144.SmallGirth
+- WOW144.PositiveCenterDepth
 error: build failed
 $ local sorry/axiom scan
 No prohibited local declarations or placeholders found.
