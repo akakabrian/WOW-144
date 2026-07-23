@@ -183,8 +183,8 @@ lemma three_le_diam_of_centerDepth_one_girth_four
   have hcv : G.Adj centerV v := hcenterUniversal v hvCenter.symm
   have hcenterOut : centerV ∉ huv.toWalk.support := by
     simp only [SimpleGraph.Adj.toWalk, Walk.support_cons, Walk.support_nil,
-      List.mem_cons, List.mem_singleton, not_or]
-    exact ⟨Ne.symm huCenter, Ne.symm hvCenter⟩
+      List.mem_cons, not_or]
+    exact ⟨Ne.symm huCenter, ⟨Ne.symm hvCenter, by simp⟩⟩
   have huvPath : huv.toWalk.IsPath := by
     apply Walk.IsPath.mk'
     simp [huv.ne]
