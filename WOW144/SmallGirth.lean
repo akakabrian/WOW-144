@@ -20,10 +20,83 @@ import WOW144.NearestCycle
 /-!
 # Small-girth center-depth-one cases
 
-This module begins the low-girth closure of Conjecture 144. Center depth one
-rules out complete graphs and therefore forces diameter at least two. When the
-girth is three, a diametral geodesic supplies the required induced tree.
+Center depth one rules out complete graphs and therefore forces diameter at
+least two. When the girth is three, a diametral geodesic supplies the required
+three-vertex induced tree. At girth four, diameter two would force a universal
+center vertex, which creates a triangle with an edge of the four-cycle.
 -/
+
+namespace SimpleGraph
+
+open Classical
+
+variable {α : Type*} [Fintype α] [DecidableEq α]
+variable {G : SimpleGraph α}
+
+omit [Fintype α] [DecidableEq α] in
+/-- Closing a path through a vertex outside its support gives a cycle. -/
+private lemma Walk.IsPath.concat_two_isCycle_small_wow144
+    {a b x : α} {p : G.Walk a b} (hp : p.IsPath) (hab : a ≠ b)
+    (hx : x ∉ p.support) (hbx : G.Adj b x) (hxa : G.Adj x a) :
+    ((p.concat hbx).concat hxa).IsCycle := by
+  have hpx : (p.concat hbx).IsPath := hp.concat hx hbx
+  rw [← Walk.isCycle_reverse, Walk.reverse_concat, Walk.cons_isCycle_iff]
+  refine ⟨(Walk.isPath_reverse_iff _).2 hpx, ?_⟩
+  intro he
+  have he' : s(x, a) ∈ (p.concat hbx).edges := by
+    have he0 : s(a, x) ∈ (p.concat hbx).edges := by
+      simpa only [Walk.edges_reverse, List.mem_reverse] using he
+    rw [Sym2.eq_swap]
+    exact he0
+  have ha : a = (p.concat hbx).penultimate := hpx.eq_penultimate_of_mem_edges he'
+  exact hab (by simpa using ha)
+
+omit [Fintype α] [DecidableEq α] in
+/-- A four-cycle contains an edge avoiding any prescribed vertex. -/
+lemma Walk.IsCycle.exists_adj_avoiding_of_length_four_wow144
+    {z x : α} {c : G.Walk z z} (hc : c.IsCycle) (hlen : c.length = 4) :
+    ∃ u v, u ≠ x ∧ v ≠ x ∧ G.Adj u v := by
+  have h01 : G.Adj (c.getVert 0) (c.getVert 1) :=
+    c.adj_getVert_succ (by omega)
+  have h12 : G.Adj (c.getVert 1) (c.getVert 2) :=
+    c.adj_getVert_succ (by omega)
+  have h23 : G.Adj (c.getVert 2) (c.getVert 3) :=
+    c.adj_getVert_succ (by omega)
+  have h02 : c.getVert 0 ≠ c.getVert 2 := by
+    intro heq
+    have hi : (0 : ℕ) = 2 := by
+      apply hc.getVert_injOn'
+      · simp only [Set.mem_setOf_eq]
+        omega
+      · simp only [Set.mem_setOf_eq]
+        omega
+      · exact heq
+    omega
+  have h13 : c.getVert 1 ≠ c.getVert 3 := by
+    intro heq
+    have hi : (1 : ℕ) = 3 := by
+      apply hc.getVert_injOn'
+      · simp only [Set.mem_setOf_eq]
+        omega
+      · simp only [Set.mem_setOf_eq]
+        omega
+      · exact heq
+    omega
+  by_cases hx0 : x = c.getVert 0
+  · refine ⟨c.getVert 1, c.getVert 2, ?_, ?_, h12⟩
+    · intro h
+      exact h01.ne (hx0.symm.trans h.symm)
+    · intro h
+      exact h02 (hx0.symm.trans h.symm)
+  · by_cases hx1 : x = c.getVert 1
+    · refine ⟨c.getVert 2, c.getVert 3, ?_, ?_, h23⟩
+      · intro h
+        exact h12.ne (hx1.symm.trans h.symm)
+      · intro h
+        exact h13 (hx1.symm.trans h.symm)
+    · exact ⟨c.getVert 0, c.getVert 1, hx0.symm, hx1.symm, h01⟩
+
+end SimpleGraph
 
 namespace WOW144
 
@@ -52,6 +125,65 @@ lemma two_le_diam_of_centerDepth_one (G : SimpleGraph α) (hconn : G.Connected)
     exact hnotTop (diam_eq_one.mp h)
   omega
 
+/-- At center depth one and girth four, the diameter is at least three. -/
+lemma three_le_diam_of_centerDepth_one_girth_four
+    (G : SimpleGraph α) (hconn : G.Connected)
+    (hq : ecc G G.center = 1) (hg : G.girth = 4) : 3 ≤ G.diam := by
+  have htwo := two_le_diam_of_centerDepth_one G hconn hq
+  by_contra hnot
+  have hdiam : G.diam = 2 := by omega
+  have hfinite : G.ediam ≠ ⊤ := connected_iff_ediam_ne_top.mp hconn
+  have hed : G.ediam = (2 : ℕ∞) := by
+    rw [← ENat.coe_toNat hfinite, ← diam, hdiam]
+  have hcenterNe : G.center ≠ Set.univ := center_ne_univ_of_centerDepth_one G hq
+  obtain ⟨c, hcCenter⟩ := G.center_nonempty
+  have hcUniversal : ∀ v : α, c ≠ v → G.Adj c v := by
+    intro v hcv
+    by_contra hnadj
+    have hpos : 0 < G.dist c v := hconn.pos_dist_of_ne hcv
+    have hle : G.dist c v ≤ 2 := by
+      have := dist_le_diam hfinite (u := c) (v := v)
+      simpa [hdiam] using this
+    have hneOne : G.dist c v ≠ 1 := by
+      rw [dist_eq_one_iff_adj]
+      exact hnadj
+    have hdist : G.dist c v = 2 := by omega
+    have heccGe : (2 : ℕ∞) ≤ G.eccent c := by
+      calc
+        (2 : ℕ∞) = G.edist c v := by
+          rw [← (hconn.preconnected c v).coe_dist_eq_edist, hdist]
+          simp
+        _ ≤ G.eccent c := edist_le_eccent
+    have hcRadius : G.eccent c = G.radius := (mem_center_iff c).mp hcCenter
+    have hrGe : (2 : ℕ∞) ≤ G.radius := by simpa [hcRadius] using heccGe
+    apply hcenterNe
+    rw [Set.eq_univ_iff_forall]
+    intro u
+    rw [mem_center_iff]
+    apply le_antisymm
+    · calc
+        G.eccent u ≤ G.ediam := eccent_le_ediam
+        _ = (2 : ℕ∞) := hed
+        _ ≤ G.radius := hrGe
+    · exact radius_le_eccent
+  have hcyc : ¬G.IsAcyclic := by
+    intro hacyc
+    have := hacyc.girth_eq_zero
+    omega
+  obtain ⟨z, c, hc, hgirth⟩ := G.exists_girth_eq_length.mpr hcyc
+  have hcLength : c.length = 4 := by omega
+  obtain ⟨u, v, huc, hvc, huv⟩ :=
+    hc.exists_adj_avoiding_of_length_four_wow144 hcLength c
+  have hcu : G.Adj c u := hcUniversal u huc.symm
+  have hcv : G.Adj c v := hcUniversal v hvc.symm
+  have hcOut : c ∉ huv.toWalk.support := by
+    simp [huc, hvc]
+  have htri : ((huv.toWalk.concat hcv.symm).concat hcu).IsCycle :=
+    huv.isPath_toWalk.concat_two_isCycle_small_wow144 huv.ne hcOut hcv.symm hcu
+  have hgLe := G.girth_le_length htri
+  rw [hg] at hgLe
+  norm_num at hgLe
+
 /-- Conjecture 144 holds at center depth one when the girth is three. -/
 theorem conjecture144_of_centerDepth_one_girth_three
     (G : SimpleGraph α) (hconn : G.Connected)
@@ -64,6 +196,19 @@ theorem conjecture144_of_centerDepth_one_girth_three
   rw [hq, hg]
   omega
 
+/-- Conjecture 144 holds at center depth one when the girth is four. -/
+theorem conjecture144_of_centerDepth_one_girth_four
+    (G : SimpleGraph α) (hconn : G.Connected)
+    (hq : ecc G G.center = 1) (hg : G.girth = 4) :
+    (G.girth : ℝ) - 1 + (ecc G G.center : ℝ) ≤
+      (largestInducedTreeSize G : ℝ) := by
+  have hdiam := three_le_diam_of_centerDepth_one_girth_four G hconn hq hg
+  have htree := diam_add_one_le_largestInducedTreeSize_wow144 (G := G) hconn
+  apply conjecture144_of_nat_bound G
+  rw [hq, hg]
+  omega
+
 #print axioms WOW144.conjecture144_of_centerDepth_one_girth_three
+#print axioms WOW144.conjecture144_of_centerDepth_one_girth_four
 
 end WOW144
