@@ -1,8 +1,18 @@
+import WOW144.Audit
+import WOW144.Arithmetic
+import WOW144.InducedTree
+import WOW144.CycleBase
+import WOW144.CycleAttachment
+import WOW144.CycleCover
+import WOW144.NearestCycle
+import WOW144.Geodesic
+import WOW144.SmallGirth
+import WOW144.CenterDepthOne
+import WOW144.MetricBounds
 import WOW144.PositiveCenterDepth
 
 /-!
-# Positive center-depth extension for WOW II Conjecture 144
+# WOW II Conjecture 144
 
-Isolated proof-branch root for the strict center-depth/diameter theorem and the
-resulting complete girth-three case.
+Root module for the isolated audit, reductions, and formal proof components.
 -/
