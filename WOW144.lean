@@ -11,6 +11,7 @@ import WOW144.GeodesicExtension
 import WOW144.GeodesicNeighbor
 import WOW144.GirthFourReplacement
 import WOW144.GirthFourDomination
+import WOW144.WalkIndexDistance
 import WOW144.SmallGirth
 import WOW144.CenterDepthOne
 import WOW144.MetricBounds
